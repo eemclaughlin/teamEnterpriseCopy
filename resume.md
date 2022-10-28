@@ -3,7 +3,7 @@
 ### John
 * ~1.5 years of experience with Java, JavaScript, and PHP
 ### Eric
-* 
+* ~Have had several classes on Java, JavaScript, and PHP.
 ### Frank
 * 
 ### Eduardo
