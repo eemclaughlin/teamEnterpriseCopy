@@ -5,7 +5,7 @@
 ### Eric
 * ~Have had several classes on Java, JavaScript, and PHP.
 ### Frank
-* 
+* At least 1 semester each of Java, PHP, Javascript, website design with HTML and CSS, and Embedded C.
 ### Eduardo
 * 
 ## Individual Strengths
