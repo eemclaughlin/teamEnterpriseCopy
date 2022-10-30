@@ -7,7 +7,7 @@
 ### Frank
 * At least 1 semester each of Java, PHP, Javascript, website design with HTML and CSS, and Embedded C.
 ### Eduardo
-* 
+* Have taken classes on Java, Javascript, Databases, UI/UX, and PHP.
 ## Individual Strengths
 ### Is a good speaker?
 * John, Eric
