@@ -31,6 +31,9 @@
 ### Manage Git
 * Eric McLaughlin
 
+### Opening Issues with Paula
+* John Oliver
+
 ## Ground Rules
 * Make sure everyone is in agreement
 * Have respectful and open discussions on ideas, problems, blockers, and concerns

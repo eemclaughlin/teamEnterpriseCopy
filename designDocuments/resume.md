@@ -15,10 +15,6 @@
 * All of us
 ### Can manage details
 * John, Eric
-### Is creative?
-* No one
-### Likes competition?
-* No one
 ### Likes to lead?
 * John, Eric
 ### Likes to follow/follow directions?
@@ -29,8 +25,6 @@
 * John
 ### Is a thinker, rather than a talker?
 * All of us
-### Is a talker, rather than a thinker?
-* None of us
 ### Is organized?
 * Eric, John, Frank
 ### Is good with numbers, stats, and data?
@@ -39,14 +33,8 @@
 * Eric, John
 ### Is a strong writer?
 * All of us
-### Likes to pull ideas together?
-* None of us
-### Can draw?
-* None of us
 ### Can handle criticism?
 * All of us
-### Has served as a tech lead?
-* None of us
 ### Has served as a project manager?
 * Eric, John
 ### Uses social media for work?
@@ -59,8 +47,6 @@
 * John, Frank
 ### Has experience GIT branches?
 * Frank, John
-### Has had to fire anyone?
-* None of us
 ### Has had to hire anyone?
 * John, Eric
 ### Has been on call during an emergency?
@@ -69,7 +55,3 @@
 * Frank, Eduardo
 ### Can speak more than one language?
 * Eduardo
-### Has started their own business?
-* No one
-### Had done some higher ed courses outside of Madison College’s program?
-* No one
