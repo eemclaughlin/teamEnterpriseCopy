@@ -19,6 +19,7 @@
 ### Communication
 #### Slack Group
 * Frank Christian
+
 #### WebEx 
 * Eric McLaughlin
 

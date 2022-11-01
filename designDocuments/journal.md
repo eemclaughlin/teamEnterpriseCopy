@@ -24,14 +24,14 @@
 - [x] Decide on the project to move forward with (Everyone)
 - [x] Create the Problem Statement (Everyone)
 - [x] Create/start the Project Plan (Everyone).
-- [ ] John to submit database design to Slack
+- [x] John to submit database design to Slack
 - [ ] Everyone to review database before Thursday.
 - [ ] Start working on your portions of code. 
 
 ## Week 2
 ### Meeting Notes (11/03/22)
 >
-### Meeting Notes ()
+### Meeting Notes (11/06/22)
 >
 ### Blockers
 >
