@@ -1,0 +1,35 @@
+{
+  "items": [
+    {
+      "volumeInfo": {
+        "title": "Java in 21 Days, Sams Teach Yourself (Covering Java 9)",
+        "authors": [
+          "Rogers Cadenhead"
+        ],
+        "publisher": "Sams Publishing",
+        "publishedDate": "2018-11",
+        "description": "In arenas ranging from enterprise development to Android app programming, Java remains one of the world's most popular programming languages. Sams Teach Yourself Java in 21 Days helps the serious learner gain true mastery over the new Java 9. In this book's straightforward, step-by-step approach, each lesson builds on everything that's come before, helping readers learn Java's core features and techniques from the ground up. Friendly, accessible, and conversational, this book offers a practical grounding in the language, without ever becoming overwhelming or intimidating. Week 1 introduces the basic building blocks of the Java programming language: keywords, operators, class and object definitions, packages, interfaces, exceptions, and threads. Week 2 covers the Swing graphical user interface class libraries and the important classes that support data structures, string handling, dates and times. Week 3 ventures into the hottest areas of Java programming: web services, Java servlets, network programming, database programming and Android development.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0672337959"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780672337956"
+          }
+        ],
+        "pageCount": 720,
+        "categories": [
+          "Computers"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=pxPlAQAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=pxPlAQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en"
+      }
+    }
+  ]
+}
