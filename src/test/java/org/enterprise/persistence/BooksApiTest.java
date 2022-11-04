@@ -1,6 +1,6 @@
 package org.enterprise.persistence;
 
-import org.enterprise.apicall.ItemsItem;
+import org.enterprise.googlebooksapi.ItemsItem;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

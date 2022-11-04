@@ -1,6 +1,6 @@
 package org.enterprise.persistence;
 
-import org.enterprise.apicall.ApiIsdnCookbook;
+import org.enterprise.googlebooksapi.ApiIsdnCookbook;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;

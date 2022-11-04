@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
  * @author eemclaughlin
  */
 @Path("/user")
-public class LibraryRestful {
+public class LibraryRestfulUser {
 
     /**
      * Base level for the user api

@@ -1,4 +1,4 @@
-package org.enterprise.apicall;
+package org.enterprise.googlebooksapi;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
