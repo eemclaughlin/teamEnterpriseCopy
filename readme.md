@@ -6,8 +6,8 @@
 * John [JohnOliver42](https://github.com/johnoliver42/InvoiceMaker)
 
 ## Overview/Problem Statement
-We are looking to create a library management system  to keep track of users and 
-the books that they have checked out and returned.  We will use Google Books API to 
+We are creating a library management backend API that will enable users to track their personal library. The API will 
+support tracking books, book locations, and support tracking who has borrowed a book.    We will use the Google Books API to 
 populate supplemental book data.
 
 #### Goals
