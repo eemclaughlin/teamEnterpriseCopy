@@ -15,7 +15,7 @@ public class LibraryRestfulSpecs extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         HashSet h = new HashSet<Class<?>>();
-        h.add(LibraryRestfulUser.class );
+        h.add(LibraryRestful.class );
         return h;
     }
 }

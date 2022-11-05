@@ -5,17 +5,8 @@ import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * Test to check that Google Books API is working as expected.
- * @author eemclaughlin
- * @version 1.0 10-10-22
- */
 public class BooksApiTest {
 
-    /**
-     * Gets response data for a book and then checks that it is correct.
-     * @throws Exception the exception
-     */
     @Test
     public void getBookDataSuccess() throws Exception {
 
