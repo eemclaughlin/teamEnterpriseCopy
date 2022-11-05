@@ -1,20 +1,17 @@
-# TEST CHANGE TO ERICMAIN BRANCH!!!
 # Weekly Reflections & Meeting Notes
+
 ## Week 1
 ### Meeting Notes (10/27/2022)
 > We had our first team meeting and created the team charter and resume. We also decided that we will meet on Thursdays at 5:30 PM and on Sundays at 1:00 PM in WebEx. 
 > We also decided our team name will be Team Enterprise.
 > 
 > For next meeting, the team will each work on ideas for our project.  We will then decide what we are going to do.
-
 ### Meeting Notes (10/30/2022)
 > We discussed and decided on a project.  We created the problem statement and project plan. We updated several of the project documents together.
 > 
 > For next meeting, we discussed goals which include having the final design for our database and to start generating much of the initial starter code.
-
 ### Blockers
 >  None
-
 ### Meeting Tasks Assigned/Completed
 - [x] Create a repository for the project (John)
 - [x] Create a Slack channel for the project (Eric)
@@ -40,22 +37,18 @@
 ### Blockers
 >
 ### Meeting Tasks Assigned/Completed
-- [ ] 
+- [ ] Read up on Restful API Implementations
+- [ ] Get project and database working together in your environments
+
+
 ## Week 3
-### Meeting Notes ()
+### Meeting Notes (11/10/22)
 >
-### Meeting Notes ()
->
-### Blockers
->
-### Tasks Assigned/Completed
-- [ ]
-## Week 4
-### Meeting Notes ()
->
-### Meeting Notes ()
+### Meeting Notes (11/13/22)
 >
 ### Blockers
 >
 ### Tasks Assigned/Completed
-- [ ]
+[ ] Finish up
+
+## Project due 11/15/22 7pm
