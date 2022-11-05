@@ -27,4 +27,4 @@
 - [ ] Create API documentation for all API endpoints. (TBD)
 
 ### Stretch Goals
-- [ ] Create and administrate user login (Cognito)
+- [ ] Create an administrate user login (Cognito)
