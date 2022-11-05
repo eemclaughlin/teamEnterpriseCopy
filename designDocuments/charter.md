@@ -43,4 +43,5 @@
 * Team will agree upon who is responsible for tasks to ensure even distribution of responsibilities
 * Inform the team if you are behind on a task that is assigned to you
 * Try to keep comments concise and direct
-* Don't clutter the Slack communication channel, reply in thread as much as possible. 
+* Don't clutter the Slack communication channel, reply in thread as much as possible.
+* Except for small changes to design documentation all features, bugfixes, and other coding work will be completed on a separate feature branch in git. 

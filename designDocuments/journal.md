@@ -25,12 +25,15 @@
 - [x] Create the Problem Statement (Everyone)
 - [x] Create/start the Project Plan (Everyone).
 - [x] John to submit database design to Slack
-- [ ] Everyone to review database before Thursday.
-- [ ] Start working on your portions of code. 
+- [x] Everyone to review database before Thursday.
+- [x] Start working on your portions of code. 
 
 ## Week 2
 ### Meeting Notes (11/03/22)
->
+> We reviewed Paula's feedback on our project plan and updated our project plan accordingly. We also reviewed the database design and made some changes.  
+> We discussed the project design and decided to create a separate service class to handle process requests made through the API instead of putting the logic in the servlets.
+### Blockers
+> None. 
 ### Meeting Notes (11/06/22)
 >
 ### Blockers
