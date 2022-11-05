@@ -34,9 +34,9 @@ public class LibraryRestful {
     public Response getIntroduction() {
         String introOutput = ("Welcome to the Library App! " +
                 "\n\nUse '/readers' to work with readers. " +
-                "\nEx. http://localhost:8080/TeamEnterprise_war/readers/1/books" +
+                "\nEx. http://localhost:8080/TeamEnterprise_war/library/readers/1/books" +
                 "\n\nUse '/books' to work with books." +
-                "\nEx. http://localhost:8080/TeamEnterprise_war/books/1/readers");
+                "\nEx. http://localhost:8080/TeamEnterprise_war/library/books/1/readers");
 
         // Send the results out to the GET
         return Response.status(200).entity(introOutput).build();
@@ -78,7 +78,7 @@ public class LibraryRestful {
     /**
      * Requestors can add the additional books keyword and a userid to get all books that
      * reader has borrowed
-     * http://localhost:8080/TeamEnterprise_war/readers/1/books
+     * http://localhost:8080/TeamEnterprise_war/library/readers/1/books
      * @param readerId
      * @return
      */
@@ -99,7 +99,7 @@ public class LibraryRestful {
 
     /**
      *
-     * http://localhost:8080/TeamEnterprise_war/books
+     * http://localhost:8080/TeamEnterprise_war/library/books
      * @return
      */
     @GET
@@ -115,7 +115,7 @@ public class LibraryRestful {
 
     /**
      *
-     * http://localhost:8080/TeamEnterprise_war/books/1
+     * http://localhost:8080/TeamEnterprise_war/library/books/1
      * @param bookId
      * @return
      */
@@ -133,7 +133,7 @@ public class LibraryRestful {
 
     /**
      *
-     * http://localhost:8080/TeamEnterprise_war/books/1/readers
+     * http://localhost:8080/TeamEnterprise_war/library/books/1/readers
      * @param bookId
      * @return
      */
