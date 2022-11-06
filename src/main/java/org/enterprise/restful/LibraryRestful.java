@@ -3,10 +3,7 @@ package org.enterprise.restful;
 import org.enterprise.service.BookApiService;
 import org.enterprise.service.ReaderApiService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 /**
@@ -20,9 +17,6 @@ public class LibraryRestful {
     ReaderApiService readerRelatedData = new ReaderApiService();
     BookApiService bookRelatedData = new BookApiService();
 
-    // *******************************************
-    // BELOW IS START OF READERS BASED RESTFUL CALLS
-    // *******************************************
     /**
      * Base level for the user api
      * Hitting this will list all users in database
@@ -41,6 +35,10 @@ public class LibraryRestful {
         // Send the results out to the GET
         return Response.status(200).entity(introOutput).build();
     }
+
+    // ***********************************************************************************
+    // BELOW IS START OF READERS BASED RESTFUL CALLS
+    // ***********************************************************************************
 
     /**
      * Allows user to get a list of all readers
@@ -75,8 +73,20 @@ public class LibraryRestful {
         return Response.status(200).entity(specificReader).build();
     }
 
+    // TESTING POST....
+    @POST
+    @Path("readers/add")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response restfulAddNewReader() {
+        //public Response create(User user) {
+        //ObjectNode json = mapper.createObjectNode();
+        //json.put("status", "ok");
+        return Response.status(200).entity(null).build();
+    }
+
     /**
-     * Requestors can add the additional books keyword and a userid to get all books that
+     * Requesters can add the additional books keyword and a userid to get all books that
      * reader has borrowed
      * http://localhost:8080/TeamEnterprise_war/library/readers/1/books
      * @param readerId
@@ -93,9 +103,9 @@ public class LibraryRestful {
         return Response.status(200).entity(readerBookOutput).build();
     }
 
-    // *******************************************
+    // ***********************************************************************************
     // BELOW IS START OF BOOKS BASED RESTFUL CALLS
-    // *******************************************
+    // ***********************************************************************************
 
     /**
      *
