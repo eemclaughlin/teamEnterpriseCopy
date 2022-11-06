@@ -73,18 +73,6 @@ public class LibraryRestful {
         return Response.status(200).entity(specificReader).build();
     }
 
-    // TESTING POST....
-    @POST
-    @Path("readers/add")
-    @Consumes("application/json")
-    @Produces("application/json")
-    public Response restfulAddNewReader() {
-        //public Response create(User user) {
-        //ObjectNode json = mapper.createObjectNode();
-        //json.put("status", "ok");
-        return Response.status(200).entity(null).build();
-    }
-
     /**
      * Requesters can add the additional books keyword and a userid to get all books that
      * reader has borrowed

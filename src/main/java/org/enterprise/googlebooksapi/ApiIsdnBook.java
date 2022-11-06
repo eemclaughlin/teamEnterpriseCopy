@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class ApiIsdnCookbook{
+public class ApiIsdnBook {
 
 	@JsonProperty("items")
 	private List<ItemsItem> items;
