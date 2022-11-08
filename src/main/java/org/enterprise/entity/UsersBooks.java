@@ -16,7 +16,8 @@ public class UsersBooks {
     private User user;
 
     @Id
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "books_id", referencedColumnName = "id")
     private Book book;
 
     /**
