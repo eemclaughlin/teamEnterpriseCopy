@@ -19,7 +19,7 @@
 - [x] Create GenericDAO. (Eric)
 - [ ] Create any additional unique daos or dao methods (Frank)
 - [ ] Write unit testing with for Daos and get coverage up (???)
-- [ ] Create service class shell. (Eric)
+- [x] Create service class shell. (Eric)
 - [x] Integrate GoogleBooks API Entities and API Dao. (Eric)
   - [ ] Write unit testing with for the API (Eric)
 - [ ] Add database to Amazon. (John)
