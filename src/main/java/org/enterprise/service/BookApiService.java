@@ -1,5 +1,11 @@
 package org.enterprise.service;
 
+import org.enterprise.entities.User;
+import org.enterprise.persistence.GenericDao;
+
+import javax.ws.rs.QueryParam;
+import java.awt.print.Book;
+
 /**
  * Class to take requests from the restful api and perform actions based on the request.
  */
@@ -71,4 +77,100 @@ public class BookApiService {
 
         return finalString;
     }
+
+
+
+    public void createBookFromIsbn(String isbn) { // TODO: Update to return a book object.
+        // TODO integrate with database using GenericDao to create a new book.
+        // Create a new book object.
+        Book book = new Book();
+
+        // Create a new bookDao.
+
+        // Return the new book.
+    }
+
+    /**
+     * Create a new book manually
+     */
+    public void createBookManually(/* Book object */) {
+        // TODO: Update to return a book object.
+        // TODO integrate with database using GenericDao to create a new book.
+        // Create a new book object.
+        Book book = new Book();
+
+        // Create a new bookDao.
+
+        // Return the new book.
+    }
+
+    public boolean deleteBook(int bookId) {
+        // TODO integrate with database using GenericDao to delete a book.
+
+        boolean success = false;
+
+
+        // Delete book from the database.
+
+        // Return if the delete was successful.
+        return success;
+    }
+
+    /**
+     * Check out a book
+     * @param bookId
+     * @param userId
+     * @return Success or failure of the checkout.
+     */
+    public boolean checkOutBook(int bookId, int userId) {
+        // TODO integrate with database using GenericDao to check out a book.
+        boolean success = false;
+
+        // Should fail if the book is currently checked out.
+
+        // Check out book from the database.
+
+        // Return if the check out was successful.
+        return success;
+    }
+
+    /**
+     * Check in a book
+     * @param bookId
+     * @param userId
+     * @return Success or failure of the check in.
+     */
+    public boolean checkInBook(int bookId, int userId) {
+        // TODO integrate with database using GenericDao to check in a book.
+        boolean success = false;
+
+        // Should fail if the book is not currently checked out.
+
+        // Check in book from the database.
+
+        // Return if the check in was successful.
+        return success;
+    }
+
+
+    public void updateBook(/* Book object */) {
+        // TODO integrate with database using GenericDao to update a book.
+        // Create a new book object.
+        // Book book = new Book();
+
+        // Update book in the database.
+
+        // Return the updated book.
+    }
+
+    /**
+     * Remoce all non-numeric characters from a string.
+     * @return A string with only numeric characters.
+     */
+    private String removeAlphaCharacters(String isbn) {
+        // Remove dashes from ISBN number.
+
+        return isbn;
+    }
+
 }
