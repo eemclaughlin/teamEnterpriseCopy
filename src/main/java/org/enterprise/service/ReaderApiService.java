@@ -1,5 +1,7 @@
 package org.enterprise.service;
 
+import org.enterprise.entities.User;
+
 /**
  * Class to take requests from the restful api and perform actions based on the request.
  */
@@ -71,5 +73,60 @@ public class ReaderApiService {
         String finalString = testReader + " is reading " + book;
 
         return finalString;
+    }
+
+    /**
+     * Update an existing user.
+     * @return the updated user.
+     */
+    public User updateUser(User user) {
+        // TODO integrate with database using GenericDao to update a user.
+        // Create a new user object.
+        // User user = new User();
+
+        // Update user in the database.
+
+        // Return the updated user.
+        return user;
+    }
+
+    /**
+     * Create a new user.
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param phone
+     * @return
+     */
+    public User createUser(String firstName, String lastName, String email, String phone) {
+        // TODO integrate with database using GenericDao to create a new user.
+        // Create a new user object.
+        User user = new User();
+
+        // Create a new userDao.
+
+
+        // Insert the new user into the database.
+
+
+        // Return the new user.
+        return user;
+    }
+
+    /**
+     * Delete a user.
+     * @param userId
+     * @return
+     */
+    public boolean deleteUser(int userId) {
+        // TODO integrate with database using GenericDao to delete a user.
+        // Create a new user object.
+        boolean success = false;
+        User user = new User();
+
+        // Delete user from the database.
+
+        // Return if the delete was successful.
+        return success;
     }
 }
