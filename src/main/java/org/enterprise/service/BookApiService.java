@@ -1,6 +1,6 @@
 package org.enterprise.service;
 
-import org.enterprise.entities.User;
+import org.enterprise.entity.User;
 import org.enterprise.persistence.GenericDao;
 
 import javax.ws.rs.QueryParam;
