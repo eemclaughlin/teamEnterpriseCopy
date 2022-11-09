@@ -5,18 +5,18 @@
 -- Table: books
 CREATE TABLE books (
                        id bigint NOT NULL AUTO_INCREMENT,
-                       isbnTen varchar(20) NOT NULL,
-                       isbnThirteen varchar(20) NOT NULL,
+                       isbnTen varchar(20) NULL,
+                       isbnThirteen varchar(20) ULL,
                        title varchar(100) NOT NULL,
-                       author varchar(50) NOT NULL,
-                       description text NOT NULL,
-                       location varchar(50) NOT NULL,
-                       publisher varchar(100) NOT NULL,
-                       publishedDate date NOT NULL,
-                       pageCount int NOT NULL,
-                       language varchar(5) NOT NULL,
-                       smallImageLink varchar(1024) NOT NULL,
-                       medImageLink varchar(1024) NOT NULL,
+                       author varchar(50) NULL,
+                       description text NULL,
+                       location varchar(50) NULL,
+                       publisher varchar(100) NULL,
+                       publishedDate date NULL,
+                       pageCount int NULL,
+                       language varchar(5) NULL,
+                       smallImageLink varchar(1024) NULL,
+                       medImageLink varchar(1024) NULL,
                        CONSTRAINT books_pk PRIMARY KEY (id)
 );
 
