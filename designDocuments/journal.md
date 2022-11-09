@@ -41,7 +41,8 @@
 ### Blockers
 > None.
 ### Meeting Notes (11/07/22)
-> 
+> We discussed status of the entities.  We also created the stubs for all the rest methods
+> and service methods.  We then worked on pushing and merging all the changes to github.
 ### Blockers
 > None.
 ### Weekly Meeting Tasks Assigned/Completed
