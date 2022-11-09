@@ -14,8 +14,8 @@
 - [x] Design the database. (John)
 - [x] Generate SQL for database model. (John)
 - [x] Create a MySQL database. (John)
-- [ ] Create the database Java entities. (John)
-  - [ ] Create POJOs in relation to database. (John)
+- [ ] Create the database Java entities. (Frank)
+  - [ ] Create POJOs in relation to database. (Frank)
 - [x] Create GenericDAO. (Eric)
 - [ ] Create any additional unique daos or dao methods (Frank)
 - [ ] Write unit testing with for Daos and get coverage up (???)
@@ -25,7 +25,7 @@
 - [ ] Add database to Amazon. (John)
 - [ ] Add war to AWS (Elastic Beanstalk) (John)
 - [ ] Create a presentation for the project. (TBD)
-- [ ] Create API documentation for all API endpoints. (TBD)
+- [ ] Create API documentation using Swagger. (Eduardo)
 
 ### Stretch Goals
 - [ ] Create an administrate user login (Cognito)

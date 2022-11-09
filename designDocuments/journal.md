@@ -12,7 +12,7 @@
 > For next meeting, we discussed goals which include having the final design for our database and to start generating much of the initial starter code.
 ### Blockers
 >  None
-### Meeting Tasks Assigned/Completed
+### Weekly Meeting Tasks Assigned/Completed
 - [x] Create a repository for the project (John)
 - [x] Create a Slack channel for the project (Eric)
 - [x] Create a team charter (Everyone)
@@ -33,22 +33,31 @@
 ### Blockers
 > None. 
 ### Meeting Notes (11/06/22)
->
+> We discussed using Swagger for our documentation and Eduardo is going to head that up.  We
+> talked about our progess with testing API implementations.  We also discussed the
+> database design and implementation.  John also updated us on his progress in getting the 
+> project up in AWS.  We prioritized what needs to happen next and will meet again tomorrow
+> at 5:30.
 ### Blockers
->
-### Meeting Tasks Assigned/Completed
-- [ ] Read up on Restful API Implementations
-- [ ] Get project and database working together in your environments
-
+> None.
+### Meeting Notes (11/07/22)
+> 
+### Blockers
+> None.
+### Weekly Meeting Tasks Assigned/Completed
+- [x] Read up on Restful API Implementations
+- [x] Get project and database working together in your environments
+- [ ] Get entities up and running.
 
 ## Week 3
 ### Meeting Notes (11/10/22)
->
+> 
 ### Meeting Notes (11/13/22)
 >
 ### Blockers
 >
-### Tasks Assigned/Completed
-[ ] Finish up
+### Weekly Meeting Tasks Assigned/Completed
+[ ] Finish up design
+[ ] Create presentation
 
 ## Project due 11/15/22 7pm

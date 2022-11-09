@@ -1,6 +1,6 @@
 package org.enterprise.persistence;
 
-import org.enterprise.googlebooksapi.ApiIsdnCookbook;
+import org.enterprise.googlebooksapi.ApiIsdnBook;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
@@ -32,7 +32,7 @@ public class BookApiDao {
      * Gets get response info from Google Books API.
      * @return the info
      */
-    public ApiIsdnCookbook getResponseInfo(String submittedIsbn) {
+    public ApiIsdnBook getResponseInfo(String submittedIsbn) {
         // Generic client builder being build.
         Client client = ClientBuilder.newClient();
 
@@ -52,10 +52,10 @@ public class BookApiDao {
         ObjectMapper mapper = new ObjectMapper();
 
         // Create a place to hold the response. (Upper level of package.)
-        ApiIsdnCookbook responseInfo = null;
+        ApiIsdnBook responseInfo = null;
         try {
             // Do the mapper work.  Read in the response and map to class.
-            responseInfo = mapper.readValue(response, ApiIsdnCookbook.class);
+            responseInfo = mapper.readValue(response, ApiIsdnBook.class);
         } catch (JsonProcessingException e) {
             // TODO Set up Logging and Write This into said log.
             e.printStackTrace();
