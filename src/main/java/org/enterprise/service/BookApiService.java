@@ -1,48 +1,51 @@
 package org.enterprise.service;
 
+import org.enterprise.entities.User;
+import org.enterprise.persistence.GenericDao;
 
+import javax.ws.rs.QueryParam;
+import java.awt.print.Book;
 
 /**
  * Class to take requests from the restful api and perform actions based on the request.
  */
-public class ReaderApiService {
-
-    public String getAllReaders() {
+public class BookApiService {
+    public String getAllBooks() {
         // TODO integrate with database using GenericDao to retrieve users and output.
         // Generate some test users for testing.
-        String testReader1 = "Eric ";
-        String testReader2 = "Frank ";
-        String testReader3 = "Eduardo ";
-        String testReader4 = "John ";
-        String testString = testReader1 + testReader2 + testReader3 + testReader4;
+        String testBook1 = "BookOne ";
+        String testBook2 = "BookTwo ";
+        String testBook3 = "BookThree ";
+        String testBook4 = "BookFour ";
+        String testString = testBook1 + testBook2 + testBook3 + testBook4;
 
         return testString;
     }
 
-    public String getSpecificReader(int readerId) {
+    public String getSpecificBook(int bookId) {
 
         // TODO integrate with database using GenericDao and retrieve user by an Id
         //GenericDao userDao = new GenericDao(User.class);
         //String specificUser = userDao.getById(Integer.parseInt(userId)).toString();
 
         // Create a null test user.
-        String testReader = null;
+        String testBook = null;
 
-        // Check given readerId for a test return statement.
-        if (readerId == 1) {
-            testReader = "Eric ";
-        } else if (readerId == 2) {
-            testReader = "Frank ";
-        } else if (readerId == 3) {
-            testReader = "Eduardo ";
-        } else if (readerId == 4) {
-            testReader = "John ";
+        // Check given bookId for a test return statement.
+        if (bookId == 1) {
+            testBook = "BookOne ";
+        } else if (bookId == 2) {
+            testBook = "BookTwo ";
+        } else if (bookId == 3) {
+            testBook = "BookThree ";
+        } else if (bookId == 4) {
+            testBook = "Book4 ";
         }
 
-        return testReader;
+        return testBook;
     }
 
-    public String getSpecificReadersBooks (int readerId) {
+    public String getSpecificBooksReader (int bookId) {
 
         // Instantiate both the order and user daos.
         //GenericDao userDao = new GenericDao(User.class);
@@ -54,79 +57,120 @@ public class ReaderApiService {
         // Use the user object to find order for just that user.
         // String specificUsersRoles = orderDao.getByPropertyEqual("user", user).toString();
 
-        // Create a test reader and a test book
-        String testReader = null;
-        String book = "Java in 21 Days";
+        // Create a test peer and a test book
+        String testBook = null;
+        String reader = "Johnny";
 
-        // Give a reader based on id given
-        if (readerId == 1) {
-            testReader = "Eric ";
-        } else if (readerId == 2) {
-            testReader = "Frank ";
-        } else if (readerId == 3) {
-            testReader = "Eduardo ";
-        } else if (readerId == 4) {
-            testReader = "John ";
+        // Give a book based on id given
+        if (bookId == 1) {
+            testBook = "BookOne ";
+        } else if (bookId == 2) {
+            testBook = "BookTwo ";
+        } else if (bookId == 3) {
+            testBook = "BookThree ";
+        } else if (bookId == 4) {
+            testBook = "Book4 ";
         }
 
-        // Combine test reader with test book.
-        String finalString = testReader + " is reading " + book;
+        // Combine test peer with test book.
+        String finalString = testBook + " is being read by " + reader;
 
         return finalString;
     }
 
-    /**
-     * Update an existing user.
-     * @return the updated user.
-     */
-    public User updateUser(User user) {
-        // TODO integrate with database using GenericDao to update a user.
-        // Create a new user object.
-        // User user = new User();
 
-        // Update user in the database.
 
-        // Return the updated user.
-        return user;
+    public void createBookFromIsbn(String isbn) { // TODO: Update to return a book object.
+        // TODO integrate with database using GenericDao to create a new book.
+        // Create a new book object.
+        Book book = new Book();
+
+        // Create a new bookDao.
+
+        // Return the new book.
     }
 
     /**
-     * Create a new user.
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param phone
-     * @return
+     * Create a new book manually
      */
-    public User createUser(String firstName, String lastName, String email, String phone) {
-        // TODO integrate with database using GenericDao to create a new user.
-        // Create a new user object.
-        User user = new User();
+    public void createBookManually(/* Book object */) {
+        // TODO: Update to return a book object.
+        // TODO integrate with database using GenericDao to create a new book.
+        // Create a new book object.
+        Book book = new Book();
 
-        // Create a new userDao.
+        // Create a new bookDao.
 
-
-        // Insert the new user into the database.
-
-
-        // Return the new user.
-        return user;
+        // Return the new book.
     }
 
-    /**
-     * Delete a user.
-     * @param userId
-     * @return
-     */
-    public boolean deleteUser(int userId) {
-        // TODO integrate with database using GenericDao to delete a user.
-        // Create a new user object.
+    public boolean deleteBook(int bookId) {
+        // TODO integrate with database using GenericDao to delete a book.
+
         boolean success = false;
-        User user = new User();
 
-        // Delete user from the database.
+
+        // Delete book from the database.
 
         // Return if the delete was successful.
         return success;
     }
+
+    /**
+     * Check out a book
+     * @param bookId
+     * @param userId
+     * @return Success or failure of the checkout.
+     */
+    public boolean checkOutBook(int bookId, int userId) {
+        // TODO integrate with database using GenericDao to check out a book.
+        boolean success = false;
+
+        // Should fail if the book is currently checked out.
+
+        // Check out book from the database.
+
+        // Return if the check out was successful.
+        return success;
+    }
+
+    /**
+     * Check in a book
+     * @param bookId
+     * @param userId
+     * @return Success or failure of the check in.
+     */
+    public boolean checkInBook(int bookId, int userId) {
+        // TODO integrate with database using GenericDao to check in a book.
+        boolean success = false;
+
+        // Should fail if the book is not currently checked out.
+
+        // Check in book from the database.
+
+        // Return if the check in was successful.
+        return success;
+    }
+
+
+    public void updateBook(/* Book object */) {
+        // TODO integrate with database using GenericDao to update a book.
+        // Create a new book object.
+        // Book book = new Book();
+
+        // Update book in the database.
+
+        // Return the updated book.
+    }
+
+    /**
+     * Remoce all non-numeric characters from a string.
+     * @return A string with only numeric characters.
+     */
+    private String removeAlphaCharacters(String isbn) {
+        // Remove dashes from ISBN number.
+
+        return isbn;
+    }
+
 }
