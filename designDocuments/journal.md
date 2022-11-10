@@ -45,10 +45,13 @@
 > and service methods.  We then worked on pushing and merging all the changes to github.
 ### Blockers
 > None.
+>### Meeting Notes (11/09/22)
+> Sorted out the database entities and discussed how to start filling in the API methods.
 ### Weekly Meeting Tasks Assigned/Completed
 - [x] Read up on Restful API Implementations
 - [x] Get project and database working together in your environments
 - [ ] Get entities up and running.
+- [ ] Get API methods up and running.
 
 ## Week 3
 ### Meeting Notes (11/10/22)
