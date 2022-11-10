@@ -1,22 +1,36 @@
 package org.enterprise.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.enterprise.entity.User;
+import org.enterprise.persistence.GenericDao;
+import org.enterprise.util.DaoFactory;
+
+import java.util.List;
 
 /**
  * Class to take requests from the restful api and perform actions based on the request.
  */
 public class ReaderApiService {
 
-    public String getAllReaders() {
-        // TODO integrate with database using GenericDao to retrieve users and output.
-        // Generate some test users for testing.
-        String testReader1 = "Eric ";
-        String testReader2 = "Frank ";
-        String testReader3 = "Eduardo ";
-        String testReader4 = "John ";
-        String testString = testReader1 + testReader2 + testReader3 + testReader4;
+    private final Logger logger = LogManager.getLogger(this.getClass());
 
-        return testString;
+    public String getAllReaders() {
+        GenericDao<User> dao = DaoFactory.createDao(User.class);
+        List<User> users = dao.getAll();
+        logger.debug("Sending back ALL users..." + users);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(users);
+            logger.debug("ResultingJSONstring = " + json);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
     public String getSpecificReader(int readerId) {

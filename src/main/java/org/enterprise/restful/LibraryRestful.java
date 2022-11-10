@@ -53,9 +53,9 @@ public class LibraryRestful {
     @Produces("application/json")
     public Response restfulGetAllReaders() {
         // Get a string of all readers.
-        String testString = readerRelatedData.getAllReaders();
+        String json = readerRelatedData.getAllReaders();
         // Send the result string out to the GET
-        return Response.status(200).entity(testString).build();
+        return Response.status(200).entity(json).build();
     }
 
     /**
@@ -101,6 +101,24 @@ public class LibraryRestful {
     // ***********************************************************************************
 
     /**
+     * Get a list of all books in the database
+     * <p>
+     * http://localhost:8080/TeamEnterprise_war/library/books
+     *
+     * @return
+     */
+    @GET
+    @Path("books")
+    @Produces("application/json")
+    public Response restfulGetAllBooks() {
+
+        String json = bookRelatedData.getAllBooks();
+
+        // Send the results out to the GET
+        return Response.status(200).entity(json).build();
+    }
+
+    /**
      * Get a list of books in the database limited to the number of books requested.
      * <p>
      * http://localhost:8080/TeamEnterprise_war/library/books
@@ -110,7 +128,7 @@ public class LibraryRestful {
     @GET
     @Path("books/{start}/{end}")
     @Produces("application/json")
-    public Response restfulGetAllBooks(@PathParam("start") int start, @PathParam("end") int end) {
+    public Response restfulRangeOfBooks(@PathParam("start") int start, @PathParam("end") int end) {
 
         String testString = bookRelatedData.getAllBooks();
 
