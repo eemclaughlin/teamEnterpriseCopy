@@ -1,5 +1,6 @@
 package org.enterprise.restful;
 
+import org.enterprise.entity.Book;
 import org.enterprise.service.BookApiService;
 import org.enterprise.service.ReaderApiService;
 
@@ -183,10 +184,7 @@ public class LibraryRestful {
     /**
      * Delete a user.
      *
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param phone
+     *
      * @return
      */
     @DELETE
@@ -265,16 +263,18 @@ public class LibraryRestful {
      * @return
      */
     @DELETE
-    @Path("books/delete/{bookId}")
+    @Path("books/delete")
     @Produces("application/json")
-    public Response deleteBook(@QueryParam("bookId") int bookId) {
-        String output = "";
+    public Response deleteBook(@QueryParam("bookid") Integer bookId) {
 
         // Delete the book from the database.
+        boolean successMessage = bookRelatedData.deleteBook(bookId);
 
-        // Return the new book to the requester.
-
-        return Response.status(200).entity(output).build();
+        if (successMessage = true) {
+            return Response.status(200).entity("Book deleted successfully.").build();
+        } else {
+            return Response.status(200).entity("Book not deleted.").build();
+        }
     }
 
     /**

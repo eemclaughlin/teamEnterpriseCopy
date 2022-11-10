@@ -104,15 +104,21 @@ public class BookApiService {
         // Return the new book.
     }
 
-    public boolean deleteBook(int bookId) {
+    public boolean deleteBook(Integer bookId) {
         // TODO integrate with database using GenericDao to delete a book.
 
         boolean success = false;
 
+        GenericDao bookDao = new GenericDao(Book.class);
+        Book bookToDelete = (Book)bookDao.getById(bookId);
 
-        // Delete book from the database.
 
-        // Return if the delete was successful.
+        if (bookToDelete != null) {
+            bookDao.delete(bookToDelete);
+            success = true;
+        }
+
+        // Return success or failure.
         return success;
     }
 
