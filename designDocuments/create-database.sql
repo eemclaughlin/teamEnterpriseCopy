@@ -8,18 +8,18 @@ DROP TABLE IF EXISTS books;
 -- Table: books
 CREATE TABLE books (
                        id bigint NOT NULL,
-                       isbnTen varchar(20) NOT NULL,
-                       isbnThirteen varchar(20) NOT NULL,
+                       isbnTen varchar(20) NULL,
+                       isbnThirteen varchar(20) NULL,
                        title varchar(100) NOT NULL,
-                       author varchar(50) NOT NULL,
-                       description text NOT NULL,
-                       location varchar(50) NOT NULL,
-                       publisher varchar(100) NOT NULL,
-                       publishedDate date NOT NULL,
-                       pageCount int NOT NULL,
-                       language varchar(5) NOT NULL,
-                       smallImageLink varchar(1024) NOT NULL,
-                       medImageLink varchar(1024) NOT NULL,
+                       author varchar(50) NULL,
+                       description text NULL,
+                       location varchar(50) NULL,
+                       publisher varchar(100) NULL,
+                       publishedDate date NULL,
+                       pageCount int NULL,
+                       language varchar(5) NULL,
+                       smallImageLink varchar(1024) NULL,
+                       medImageLink varchar(1024) NULL,
                        CONSTRAINT books_pk PRIMARY KEY (id)
 );
 
@@ -50,3 +50,16 @@ ALTER TABLE users_books ADD CONSTRAINT Table_3_books FOREIGN KEY Table_3_books (
 -- Reference: Table_3_users (table: users_books)
 ALTER TABLE users_books ADD CONSTRAINT Table_3_users FOREIGN KEY Table_3_users (users_id)
     REFERENCES users (id);
+
+-- DATA REFRESH STUFF
+INSERT INTO team_enterprise.users (id, cardNumber, firstName, lastName, email, phone) VALUES (1, 123, 'Johnny', 'Cash', 'jcash@yahoo.com', 5551234);
+INSERT INTO team_enterprise.users (id, cardNumber, firstName, lastName, email, phone) VALUES (2, 456, 'Bob', 'Hamelin', 'bobh@yahoo.com', 5555678);
+INSERT INTO team_enterprise.users (id, cardNumber, firstName, lastName, email, phone) VALUES (3, 789, 'Peggy', 'Curbs', 'pcurbs@gmail.com', 5551357);
+INSERT INTO team_enterprise.users (id, cardNumber, firstName, lastName, email, phone) VALUES (4, 086, 'Bill', 'Nye', 'billnye@scienceguy.com', 5559876);
+INSERT INTO team_enterprise.books (id, isbnTen, isbnThirteen, title, author, description, pageCount) VALUES (1, '1234567890', '1234567890123', 'Cool Book 1', 'Tiberius Kirk', 'Book about stuff', 199);
+INSERT INTO team_enterprise.books (id, isbnTen, title, author, description, pageCount) VALUES (2, '0987654321', 'Awesome Book', 'Capt Picard', 'Interesting Read', 1001);
+INSERT INTO team_enterprise.books (id, isbnThirteen, title, author) VALUES (3, '0987654321123', 'Book 3', 'Capt Archer');
+INSERT INTO team_enterprise.users_books (users_id, books_id) VALUES (1, 2);
+INSERT INTO team_enterprise.users_books (users_id, books_id) VALUES (1, 1);
+INSERT INTO team_enterprise.users_books (users_id, books_id) VALUES (4, 3);
+-- End of file.
