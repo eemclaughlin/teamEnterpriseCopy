@@ -3,13 +3,14 @@ package org.enterprise.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * The type Users books.
  */
 @Entity(name = "UsersBooks")
 @Table(name = "users_books")
-public class UsersBooks {
+public class UsersBooks implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name = "users_id", referencedColumnName = "id")
@@ -18,7 +19,8 @@ public class UsersBooks {
     @Id
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "books_id", referencedColumnName = "id")
-    private Book book;
+
+    private Books book;
 
     /**
      * Instantiates a new Users books.
@@ -31,7 +33,7 @@ public class UsersBooks {
      * @param user the user
      * @param book the book
      */
-    public UsersBooks(User user, Book book) {
+    public UsersBooks(User user, Books book) {
         this.user = user;
         this.book = book;
     }
@@ -59,7 +61,7 @@ public class UsersBooks {
      *
      * @return the book
      */
-    public Book getBook() {
+    public Books getBook() {
         return book;
     }
 
@@ -68,7 +70,7 @@ public class UsersBooks {
      *
      * @param book the book
      */
-    public void setBook(Book book) {
+    public void setBook(Books book) {
         this.book = book;
     }
 

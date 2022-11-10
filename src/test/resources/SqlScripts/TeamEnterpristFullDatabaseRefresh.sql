@@ -21,7 +21,7 @@ CREATE TABLE books (
                        location varchar(50) NULL,
                        publisher varchar(100) NULL,
                        publishedDate date NULL,
-                       pageCount int NULL,
+                       pageCount varchar(100) NULL,
                        language varchar(5) NULL,
                        smallImageLink varchar(1024) NULL,
                        medImageLink varchar(1024) NULL,
