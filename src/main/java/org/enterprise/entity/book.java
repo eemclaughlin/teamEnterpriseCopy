@@ -6,9 +6,9 @@ import javax.persistence.*;
 /**
  * The type Book.
  */
-@Entity(name = "Book")
+@Entity(name = "book")
 @Table(name = "books")
-public class Book {
+public class book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -53,7 +53,7 @@ public class Book {
     /**
      * Instantiates a new Book.
      */
-    public Book() {}
+    public book() {}
 
     /**
      * Instantiates a new Book.
@@ -72,7 +72,7 @@ public class Book {
      * @param smallImageLink the small image link
      * @param medImageLink   the med image link
      */
-    public Book(int id, String isbnTen, String isbnThirteen, String title,
+    public book(int id, String isbnTen, String isbnThirteen, String title,
                 String author, String description, String location,
                 String publisher, String publishedDate, int pageCount,
                 String language, String smallImageLink, String medImageLink) {

@@ -1,25 +1,39 @@
 package org.enterprise.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.enterprise.entity.User;
+import org.enterprise.entity.book;
 import org.enterprise.persistence.GenericDao;
+import org.enterprise.util.DaoFactory;
 
 import javax.ws.rs.QueryParam;
 import java.awt.print.Book;
+import java.util.List;
 
 /**
  * Class to take requests from the restful api and perform actions based on the request.
  */
 public class BookApiService {
-    public String getAllBooks() {
-        // TODO integrate with database using GenericDao to retrieve users and output.
-        // Generate some test users for testing.
-        String testBook1 = "BookOne ";
-        String testBook2 = "BookTwo ";
-        String testBook3 = "BookThree ";
-        String testBook4 = "BookFour ";
-        String testString = testBook1 + testBook2 + testBook3 + testBook4;
 
-        return testString;
+    private final Logger logger = LogManager.getLogger(this.getClass());
+    public String getAllBooks() {
+
+        GenericDao<book> dao = DaoFactory.createDao(book.class);
+        List<book> books = dao.getAll();
+        logger.debug("Sending back ALL books..." + books);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(books);
+            logger.debug("ResultingJSONstring = " + json);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
     public String getSpecificBook(int bookId) {

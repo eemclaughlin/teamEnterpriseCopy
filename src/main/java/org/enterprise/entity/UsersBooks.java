@@ -1,23 +1,23 @@
 package org.enterprise.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * The type Users books.
  */
 @Entity(name = "UsersBooks")
 @Table(name = "users_books")
-public class UsersBooks {
+public class UsersBooks implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name = "users_id", referencedColumnName = "id")
     private User user;
 
     @Id
-
-    private Book book;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "books_id", referencedColumnName = "id")
+    private org.enterprise.entity.book book;
 
     /**
      * Instantiates a new Users books.
@@ -27,55 +27,55 @@ public class UsersBooks {
     /**
      * Instantiates a new Users books.
      *
-     * @param usersId the users id
-     * @param booksId the books id
+     * @param user the user
+     * @param book the book
      */
-    public UsersBooks(int usersId, int booksId) {
-        this.usersId = usersId;
-        this.booksId = booksId;
+    public UsersBooks(User user, org.enterprise.entity.book book) {
+        this.user = user;
+        this.book = book;
     }
 
     /**
-     * Gets users id.
+     * Gets user.
      *
-     * @return the users id
+     * @return the user
      */
-    public int getUsersId() {
-        return usersId;
+    public User getUser() {
+        return user;
     }
 
     /**
-     * Sets users id.
+     * Sets user.
      *
-     * @param usersId the users id
+     * @param user the user
      */
-    public void setUsersId(int usersId) {
-        this.usersId = usersId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**
-     * Gets books id.
+     * Gets book.
      *
-     * @return the books id
+     * @return the book
      */
-    public int getBooksId() {
-        return booksId;
+    public org.enterprise.entity.book getBook() {
+        return book;
     }
 
     /**
-     * Sets books id.
+     * Sets book.
      *
-     * @param booksId the books id
+     * @param book the book
      */
-    public void setBooksId(int booksId) {
-        this.booksId = booksId;
+    public void setBook(org.enterprise.entity.book book) {
+        this.book = book;
     }
 
     @Override
     public String toString() {
         return "UsersBooks{" +
-                "usersId=" + usersId +
-                ", booksId=" + booksId +
+                "user=" + user +
+                ", book=" + book +
                 '}';
     }
 }
