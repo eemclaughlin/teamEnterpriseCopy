@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.enterprise.entity.Books;
 import org.enterprise.entity.User;
-import org.enterprise.entity.book;
 import org.enterprise.persistence.GenericDao;
 import org.enterprise.util.DaoFactory;
 
@@ -21,8 +21,8 @@ public class BookApiService {
     private final Logger logger = LogManager.getLogger(this.getClass());
     public String getAllBooks() {
 
-        GenericDao<book> dao = DaoFactory.createDao(book.class);
-        List<book> books = dao.getAll();
+        GenericDao<Books> dao = DaoFactory.createDao(Books.class);
+        List<Books> books = dao.getAll();
         logger.debug("Sending back ALL books..." + books);
         ObjectMapper mapper = new ObjectMapper();
         String json = null;

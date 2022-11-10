@@ -6,9 +6,9 @@ import javax.persistence.*;
 /**
  * The type Book.
  */
-@Entity(name = "book")
+@Entity(name = "Books")
 @Table(name = "books")
-public class book {
+public class Books {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -39,7 +39,7 @@ public class book {
     private String publishedDate;
 
     @Column(name = "pageCount")
-    private int pageCount;
+    private String pageCount;
 
     @Column(name = "language")
     private String language;
@@ -50,10 +50,11 @@ public class book {
     @Column(name = "medImageLink")
     private String medImageLink;
 
+
     /**
      * Instantiates a new Book.
      */
-    public book() {}
+    public Books() {}
 
     /**
      * Instantiates a new Book.
@@ -72,9 +73,9 @@ public class book {
      * @param smallImageLink the small image link
      * @param medImageLink   the med image link
      */
-    public book(int id, String isbnTen, String isbnThirteen, String title,
+    public Books(int id, String isbnTen, String isbnThirteen, String title,
                 String author, String description, String location,
-                String publisher, String publishedDate, int pageCount,
+                String publisher, String publishedDate, String pageCount,
                 String language, String smallImageLink, String medImageLink) {
         this.id = id;
         this.isbnTen = isbnTen;
@@ -258,7 +259,7 @@ public class book {
      *
      * @return the page count
      */
-    public int getPageCount() {
+    public String getPageCount() {
         return pageCount;
     }
 
@@ -267,7 +268,7 @@ public class book {
      *
      * @param pageCount the page count
      */
-    public void setPageCount(int pageCount) {
+    public void setPageCount(String pageCount) {
         this.pageCount = pageCount;
     }
 

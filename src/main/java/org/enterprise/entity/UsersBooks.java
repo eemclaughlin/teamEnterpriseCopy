@@ -1,5 +1,7 @@
 package org.enterprise.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -17,7 +19,7 @@ public class UsersBooks implements Serializable {
     @Id
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "books_id", referencedColumnName = "id")
-    private org.enterprise.entity.book book;
+    private Books book;
 
     /**
      * Instantiates a new Users books.
@@ -30,7 +32,7 @@ public class UsersBooks implements Serializable {
      * @param user the user
      * @param book the book
      */
-    public UsersBooks(User user, org.enterprise.entity.book book) {
+    public UsersBooks(User user, Books book) {
         this.user = user;
         this.book = book;
     }
@@ -58,7 +60,7 @@ public class UsersBooks implements Serializable {
      *
      * @return the book
      */
-    public org.enterprise.entity.book getBook() {
+    public Books getBook() {
         return book;
     }
 
@@ -67,7 +69,7 @@ public class UsersBooks implements Serializable {
      *
      * @param book the book
      */
-    public void setBook(org.enterprise.entity.book book) {
+    public void setBook(Books book) {
         this.book = book;
     }
 
