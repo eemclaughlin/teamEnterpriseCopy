@@ -16,7 +16,8 @@ public class UsersBooks {
     private User user;
 
     @Id
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "books_id", referencedColumnName = "id")
     private Book book;
 
     /**
@@ -27,55 +28,55 @@ public class UsersBooks {
     /**
      * Instantiates a new Users books.
      *
-     * @param usersId the users id
-     * @param booksId the books id
+     * @param user the user
+     * @param book the book
      */
-    public UsersBooks(int usersId, int booksId) {
-        this.usersId = usersId;
-        this.booksId = booksId;
+    public UsersBooks(User user, Book book) {
+        this.user = user;
+        this.book = book;
     }
 
     /**
-     * Gets users id.
+     * Gets user.
      *
-     * @return the users id
+     * @return the user
      */
-    public int getUsersId() {
-        return usersId;
+    public User getUser() {
+        return user;
     }
 
     /**
-     * Sets users id.
+     * Sets user.
      *
-     * @param usersId the users id
+     * @param user the user
      */
-    public void setUsersId(int usersId) {
-        this.usersId = usersId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**
-     * Gets books id.
+     * Gets book.
      *
-     * @return the books id
+     * @return the book
      */
-    public int getBooksId() {
-        return booksId;
+    public Book getBook() {
+        return book;
     }
 
     /**
-     * Sets books id.
+     * Sets book.
      *
-     * @param booksId the books id
+     * @param book the book
      */
-    public void setBooksId(int booksId) {
-        this.booksId = booksId;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     @Override
     public String toString() {
         return "UsersBooks{" +
-                "usersId=" + usersId +
-                ", booksId=" + booksId +
+                "user=" + user +
+                ", book=" + book +
                 '}';
     }
 }

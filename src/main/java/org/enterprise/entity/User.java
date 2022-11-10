@@ -31,7 +31,7 @@ public class User {
     @Column(name = "phone")
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UsersBooks> usersBooks = new HashSet<>();
 
     /**
