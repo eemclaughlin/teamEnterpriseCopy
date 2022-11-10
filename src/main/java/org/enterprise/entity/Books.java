@@ -50,7 +50,6 @@ public class Books {
     @Column(name = "medImageLink")
     private String medImageLink;
 
-
     /**
      * Instantiates a new Book.
      */
