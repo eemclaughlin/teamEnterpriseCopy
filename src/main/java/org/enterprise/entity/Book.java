@@ -50,6 +50,10 @@ public class Book {
     @Column(name = "medImageLink")
     private String medImageLink;
 
+    @OneToOne(mappedBy = "books")
+    private UsersBooks usersBooks;
+
+
     /**
      * Instantiates a new Book.
      */
