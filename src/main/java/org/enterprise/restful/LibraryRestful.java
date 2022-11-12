@@ -200,7 +200,7 @@ public class LibraryRestful {
      * CREATE.r.u.d
      *
      * http://localhost:8080/TeamEnterprise_war/library/books/addbyisbn?isbn=9780-061122415
-     * @version 0.5 Needs Work
+     * @version 0.8 Very close to complete
      *
      * @param isbn
      * @return A JSON object with the new books info.
@@ -221,8 +221,8 @@ public class LibraryRestful {
      * Create a new book and add to the database manually.
      * CREATE.r.u.d
      *
-     * http://localhost:8080/TeamEnterprise_war/library/books/addManually?isbnTen=1234567890.....
-     * @version 0.5 Needs Work     *
+     * http://localhost:8080/TeamEnterprise_war/library/books/addManually?isbnten=1234567890.....
+     * @version 1.0 Working
      *
      * @param isbnTen
      * @param isbnThirteen
@@ -238,19 +238,23 @@ public class LibraryRestful {
     @POST
     @Path("books/addManually")
     @Produces("application/json")
-    //TODO This method still needs to be done
-    public Response createBookManually(@QueryParam("isbnTen") String isbnTen, @QueryParam("isbnThirteen") String isbnThirteen
-            , @QueryParam("title") String title, @QueryParam("author") String author, @QueryParam("publisher") String publisher
-            , @QueryParam("publishedDate") String publishedDate, @QueryParam("description") String description
-            , @QueryParam("pageCount") int pageCount, @QueryParam("language") String language) {
+    public Response restfulCreateBookManually(
+            @QueryParam("isbnten") String isbnTen,
+            @QueryParam("isbnthirteen") String isbnThirteen,
+            @QueryParam("title") String title,
+            @QueryParam("author") String author,
+            @QueryParam("publisher") String publisher,
+            @QueryParam("publisheddate") String publishedDate,
+            @QueryParam("description") String description,
+            @QueryParam("pagecount") int pageCount,
+            @QueryParam("language") String language)
+    {
 
-        String output = "";
+        // Send book info to create book method and return the new book info.
+        String newBookOutput = bookRelatedData.createBookManually(isbnTen, isbnThirteen, title, author, publisher, publishedDate, description, pageCount, language);
 
-        // Create a new book in the database.
-
-        // Return the new book to the requester.
-
-        return Response.status(200).entity(output).build();
+        // Return the new user to the requester.
+        return Response.status(200).entity(newBookOutput).build();
     }
 
     /**
@@ -274,32 +278,11 @@ public class LibraryRestful {
     }
 
     /**
-     * Get a list of books in the database limited to the number of books requested.
-     * c.READ.u.d
-     *
-     * http://localhost:8080/TeamEnterprise_war/library/books/1/5
-     * @version 0.5 Needs Work
-     *
-     * @return
-     */
-    @GET
-    @Path("books/{start}/{end}")
-    @Produces("application/json")
-    //TODO This method still needs to be done
-    public Response restfulRangeOfBooks(@PathParam("start") int start, @PathParam("end") int end) {
-
-        String testString = bookRelatedData.getAllBooks();
-
-        // Send the results out to the GET
-        return Response.status(200).entity(testString).build();
-    }
-
-    /**
      * Get a specific book by bookID
      * c.READ.u.d
      *
      * http://localhost:8080/TeamEnterprise_war/library/books/1
-     * @version 0.5 Needs Work
+     * @version 1.0 Working
      *
      * @param bookId
      * @return
@@ -307,7 +290,6 @@ public class LibraryRestful {
     @GET
     @Path("books/{bookId}")
     @Produces("application/json")
-    //TODO This method still needs to be done
     public Response restfulGetSpecificBook(@PathParam("bookId") int bookId) {
 
         // Get a specific reader based on id provided.
@@ -321,16 +303,16 @@ public class LibraryRestful {
      * By Book, get the reader who currently has the book checked out.
      * c.READ.u.d
      *
-     * http://localhost:8080/TeamEnterprise_war/library/books/1/readers
-     * @version 0.5 Needs Work
+     * http://localhost:8080/TeamEnterprise_war/library/books/1/reader
+     * @version 0.8 Almost There
      *
      * @param bookId
      * @return
      */
     @GET
-    @Path("books/{bookId}/readers/")
+    @Path("books/{bookId}/reader/")
     @Produces("application/json")
-    //TODO This method still needs to be done
+    //TODO This method works but returns the book not the user.  Small fix.
     public Response restfulGetSpecificBooksReader(@PathParam("bookId") int bookId) {
 
         String bookReaderOutput = bookRelatedData.getSpecificBooksReader(bookId);
@@ -343,10 +325,8 @@ public class LibraryRestful {
      * Update a book in the database.
      * c.r.UPDATE.d
      *
-     * http://localhost:8080/TeamEnterprise_war/library/books/update?bookId=1&
-     * isbnTen=1234567890&isbnThirteen=1234567890123&title=TestTitle&author=TestAuthor&
-     * publisher=TestPublisher&publishedDate=2017-01-01&description=TestDescription&pageCount=123&language=TestLanguage
-     * @version 0.5 Needs Work
+     * http://localhost:8080/TeamEnterprise_war/library/books/update/1?isbnten=1234567890.....
+     * @version 1.0 Working
      *
      * @param bookId
      * @return
@@ -354,26 +334,31 @@ public class LibraryRestful {
     @PUT
     @Path("books/update/{bookId}")
     @Produces("application/json")
-    //TODO This method still needs to be done
-    public Response updateBook(@QueryParam("bookId") int bookId, @QueryParam("isbnTen") String isbnTen, @QueryParam("isbnThirteen") String isbnThirteen
-            , @QueryParam("title") String title, @QueryParam("author") String author, @QueryParam("publisher") String publisher
-            , @QueryParam("publishedDate") String publishedDate, @QueryParam("description") String description
-            , @QueryParam("pageCount") int pageCount, @QueryParam("language") String language) {
-
-        String output = "";
+    public Response restfulUpdateBook(
+            @PathParam("bookId") int bookId,
+            @QueryParam("isbnten") String isbnTen,
+            @QueryParam("isbnthirteen") String isbnThirteen,
+            @QueryParam("title") String title,
+            @QueryParam("author") String author,
+            @QueryParam("publisher") String publisher,
+            @QueryParam("publisheddate") String publishedDate,
+            @QueryParam("description") String description,
+            @QueryParam("pageCount") int pageCount,
+            @QueryParam("language") String language)
+    {
 
         // Update the book in the database.
+        String updatedBookOutput = bookRelatedData.updateBook(bookId, isbnTen, isbnThirteen, title, author, publisher, publishedDate, description, pageCount, language);
 
         // Return the new book to the requester.
-
-        return Response.status(200).entity(output).build();
+        return Response.status(200).entity(updatedBookOutput).build();
     }
 
     /**
      * Delete a book.
      * c.r.u.DELETE
      *
-     * http://localhost:8080/TeamEnterprise_war/library/books/delete?bookId=1
+     * http://localhost:8080/TeamEnterprise_war/library/books/delete/1
      * @version 0.5 Needs Work
      *
      * @param bookId
@@ -392,7 +377,7 @@ public class LibraryRestful {
     }
 
     // ***********************************************************************************
-    // BELOW IS START OF USERS_ BOOKS BASED RESTFUL CALLS
+    // BELOW IS START OF USERS_BOOKS BASED RESTFUL CALLS
     // ***********************************************************************************
 
     /**
