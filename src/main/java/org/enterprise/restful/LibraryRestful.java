@@ -1,6 +1,6 @@
 package org.enterprise.restful;
 
-import org.enterprise.entity.Book;
+import org.enterprise.entity.Books;
 import org.enterprise.service.BookApiService;
 import org.enterprise.service.ReaderApiService;
 
