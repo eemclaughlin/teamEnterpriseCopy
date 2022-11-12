@@ -5,14 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.enterprise.entity.Books;
-import org.enterprise.entity.User;
 import org.enterprise.googlebooksapi.ItemsItem;
 import org.enterprise.persistence.BookApiDao;
 import org.enterprise.persistence.GenericDao;
 import org.enterprise.util.DaoFactory;
 
-import javax.ws.rs.QueryParam;
-import java.awt.print.Book;
 import java.util.List;
 
 /**
@@ -107,7 +104,7 @@ public class BookApiService {
         // TODO: Update to return a book object.
         // TODO integrate with database using GenericDao to create a new book.
         // Create a new book object.
-        Book book = new Book();
+        org.enterprise.entity.Books book = new Books();
 
         // Create a new bookDao.
 
