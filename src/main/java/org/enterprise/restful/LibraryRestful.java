@@ -99,7 +99,7 @@ public class LibraryRestful {
      * c.READ.u.d
      *
      * http://localhost:8080/TeamEnterprise_war/library/readers/1
-     * @version 0.5 Needs Work
+     * @version 1.0 Working
      *
      * @param readerId
      * @return json specific reader
@@ -107,7 +107,6 @@ public class LibraryRestful {
     @GET
     @Path("readers/{readerId}")
     @Produces("application/json")
-    //TODO This method still needs to be done
     public Response restfulGetSpecificReader(@PathParam("readerId") int readerId) {
 
         // Get a specific reader based on id provided.
@@ -122,7 +121,7 @@ public class LibraryRestful {
      * c.READ.u.d
      *
      * http://localhost:8080/TeamEnterprise_war/library/readers/1/books
-     * @version 0.5 Needs Work
+     * @version 0.1 Working
      *
      * @param readerId
      * @return
@@ -130,7 +129,7 @@ public class LibraryRestful {
     @GET
     @Path("readers/{readerId}/books/")
     @Produces("application/json")
-    //TODO This method still needs to be done
+    //TODO This is working but outputs the user for each book.  Needs filtering.
     public Response restfulGetSpecificReadersBooks(@PathParam("readerId") int readerId) {
 
         String readerBookOutput = readerRelatedData.getSpecificReadersBooks(readerId);
@@ -143,12 +142,10 @@ public class LibraryRestful {
      * Update a users/readers information
      * c.r.UPDATE.d
      *
-     * http://localhost:8080/TeamEnterprise_war/library/users/update/123?firstName=TestFirstName&
-     * lastName=TestLastName&address=TestAddress&city=TestCity&state=TestState&zip=12345&
-     * phone=1234567890&email=TestEmail
-     * @version 0.1 Needs Much Work
+     * http://localhost:8080/TeamEnterprise_war/library/readers/1/update?firstName="Bob"...
+     * @version 1.0 Working
      *
-     * @param cardNumber the card number
+     * @param readerId   readerid
      * @param firstName  the first name
      * @param lastName   the last name
      * @param email      the email
@@ -156,41 +153,43 @@ public class LibraryRestful {
      * @return the response
      */
     @PUT
-    @Path("users/update/{cardNumber}")
+    @Path("readers/update/{readerid}")
     @Produces("application/json")
-    //TODO This method still needs to be done
-    public Response updateUser(@PathParam("cardNumber") int cardNumber, @QueryParam("firstName") String firstName
-            , @QueryParam("lastName") String lastName, @QueryParam("email") String email, @QueryParam("phone") String phone) {
+    public Response restfulUpdateReader(
+            @PathParam("readerid") int readerId,
+            @QueryParam("firstname") String firstName,
+            @QueryParam("lastname") String lastName,
+            @QueryParam("email") String email,
+            @QueryParam("phone") String phone)
+    {
 
-        String output = "";
-        // Update the user in the database.
+        // Take readerID and new parameters and send to update user method.  Return new user info.
+        String updatedUser = readerRelatedData.updateReader(readerId, firstName, lastName, email, phone);
 
-        // Return the new user to the requesters.
-
-        return Response.status(200).entity(output).build();
+        // Return the response to the GET.
+        return Response.status(200).entity(updatedUser).build();
     }
 
     /**
      * Delete a reader/user.
      * c.r.u.DELETE
      *
-     * http://localhost:8080/TeamEnterprise_war/library/delete/123
+     * http://localhost:8080/TeamEnterprise_war/library/readers/delete/1
      * @version 0.5 Needs Work
      *
-     * @return
+     * @return the response
      */
     @DELETE
-    @Path("users/delete/{cardNumber}")
+    @Path("readers/delete/{readerid}")
     @Produces("application/json")
-    //TODO This method still needs to be done
-    public Response deleteUser(@PathParam("cardNumber") int cardNumber) {
-        String output = "";
+    //TODO This is largely done but can't delete users who are in UsersBooks table. Need fix.
+    public Response restfulDeleteReader(@PathParam("readerid") int readerId) {
 
-        // Delete the user from the database.
+        // Call on delete reader method to delete the reader.
+        String message = readerRelatedData.deleteReader(readerId);
 
         // Return the result to the requester.
-
-        return Response.status(200).entity(output).build();
+        return Response.status(200).entity(message).build();
     }
 
     // ***********************************************************************************
@@ -209,7 +208,7 @@ public class LibraryRestful {
     @POST
     @Path("books/addbyisbn")
     @Produces("application/json")
-    //TODO This method works but doesn't insert ISBN.  Not sure how to fix.
+    //TODO This method works but doesn't insert ISBN.  Not sure correct code to get isbn.
     public Response restfulCreateBookFromIsbn(@QueryParam("isbn") String isbn) {
 
         String newBookOutput = bookRelatedData.createBookFromIsbn(isbn);

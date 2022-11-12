@@ -36,7 +36,7 @@ public class BookApiService {
         logger.debug("ISBN with dashes: " + isbn);
 
         // Remove the dashes from the ISBN.
-        removeDashes(isbn);
+        isbn = removeDashes(isbn);
 
         logger.debug("ISBN without dashes: " + isbn);
 
@@ -124,7 +124,9 @@ public class BookApiService {
 
         GenericDao<Books> dao = DaoFactory.createDao(Books.class);
         List<Books> books = dao.getAll();
+
         logger.debug("Sending back ALL books..." + books);
+
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
         try {

@@ -39,7 +39,7 @@ public class Books {
     private String publishedDate;
 
     @Column(name = "pageCount")
-    private int pageCount;
+    private Integer pageCount;
 
     @Column(name = "language")
     private String language;
@@ -258,7 +258,7 @@ public class Books {
      *
      * @return the page count
      */
-    public int getPageCount() {
+    public Integer getPageCount() {
         return pageCount;
     }
 
@@ -267,7 +267,7 @@ public class Books {
      *
      * @param pageCount the page count
      */
-    public void setPageCount(int pageCount) {
+    public void setPageCount(Integer pageCount) {
         this.pageCount = pageCount;
     }
 
