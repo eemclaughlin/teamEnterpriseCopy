@@ -28,19 +28,35 @@ public class ReaderApiService {
      * @param phone
      * @return
      */
-    public User createUser(String firstName, String lastName, String email, String phone) {
-        // TODO integrate with database using GenericDao to create a new user.
+    public String createUser(String firstName, String lastName, String email, String phone) {
+
+        // Generate the user's card number.
+        int cardNumber = generateCardNumber();
+
         // Create a new user object.
-        User user = new User();
+        User newUser = new User(cardNumber, firstName, lastName, email, phone);
 
         // Create a new userDao.
-
+        GenericDao userDao = new GenericDao(User.class);
 
         // Insert the new user into the database.
+        userDao.insert(newUser);
 
+        // Return the new user as a string.
+        String userInfo = newUser.toString();
 
-        // Return the new user.
-        return user;
+        logger.debug("Sending back new user info ..." + userInfo);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(userInfo);
+            logger.debug("ResultingJSONstring = " + json);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
     /**
@@ -169,5 +185,16 @@ public class ReaderApiService {
 
         // Return if the delete was successful.
         return success;
+    }
+
+    private int generateCardNumber() {
+
+        int min = 100;
+        int max = 999;
+
+        // Generate a random number between 100 and 999.
+        int cardNumber = (int) (Math.random() * (max - min + 1) + min);
+
+        return cardNumber;
     }
 }

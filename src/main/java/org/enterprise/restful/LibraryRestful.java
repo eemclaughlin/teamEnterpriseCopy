@@ -49,8 +49,8 @@ public class LibraryRestful {
      * Create a new reader/user and add to database.
      * CREATE.r.u.d
      *
-     * http://localhost:8080/TeamEnterprise_war/library/users/add?firstName="Bob"...
-     * @version 0.5 Needs Work
+     * http://localhost:8080/TeamEnterprise_war/library/readers/add?firstName="Bob"...
+     * @version 1.0 Working
      *
      * @param firstName
      * @param lastName
@@ -59,18 +59,20 @@ public class LibraryRestful {
      * @return A JSON object with the new users info including their card number.
      */
     @POST
-    @Path("users/add")
+    @Path("readers/add")
     @Produces("application/json")
-    public Response createUser(@QueryParam("firstName") String firstName, @QueryParam("lastName") String lastName, @QueryParam("email") String email, @QueryParam("phone") String phone) {
-        String output = "";
+    public Response restfulCreateUser(
+            @QueryParam("firstname") String firstName,
+            @QueryParam("lastname") String lastName,
+            @QueryParam("email") String email,
+            @QueryParam("phone") String phone)
+    {
 
-        // Generate a new card number for the user.
-
-        // Create a new user in the database.
+        // Call createUser method from ReaderApiService to create a new user.
+        String newUserJson = readerRelatedData.createUser(firstName, lastName, email, phone);
 
         // Return the new user to the requester.
-
-        return Response.status(200).entity(output).build();
+        return Response.status(200).entity(newUserJson).build();
     }
 
     /**
@@ -105,6 +107,7 @@ public class LibraryRestful {
     @GET
     @Path("readers/{readerId}")
     @Produces("application/json")
+    //TODO This method still needs to be done
     public Response restfulGetSpecificReader(@PathParam("readerId") int readerId) {
 
         // Get a specific reader based on id provided.
@@ -127,6 +130,7 @@ public class LibraryRestful {
     @GET
     @Path("readers/{readerId}/books/")
     @Produces("application/json")
+    //TODO This method still needs to be done
     public Response restfulGetSpecificReadersBooks(@PathParam("readerId") int readerId) {
 
         String readerBookOutput = readerRelatedData.getSpecificReadersBooks(readerId);
@@ -154,6 +158,7 @@ public class LibraryRestful {
     @PUT
     @Path("users/update/{cardNumber}")
     @Produces("application/json")
+    //TODO This method still needs to be done
     public Response updateUser(@PathParam("cardNumber") int cardNumber, @QueryParam("firstName") String firstName
             , @QueryParam("lastName") String lastName, @QueryParam("email") String email, @QueryParam("phone") String phone) {
 
@@ -177,6 +182,7 @@ public class LibraryRestful {
     @DELETE
     @Path("users/delete/{cardNumber}")
     @Produces("application/json")
+    //TODO This method still needs to be done
     public Response deleteUser(@PathParam("cardNumber") int cardNumber) {
         String output = "";
 
@@ -203,6 +209,7 @@ public class LibraryRestful {
     @POST
     @Path("books/addByISBN")
     @Produces("application/json")
+    //TODO This method still needs to be done
     public Response createBookFromIsbn(@QueryParam("isbn") String isbn) {
         String output = "";
 
@@ -240,6 +247,7 @@ public class LibraryRestful {
     @POST
     @Path("books/addManually")
     @Produces("application/json")
+    //TODO This method still needs to be done
     public Response createBookManually(@QueryParam("isbnTen") String isbnTen, @QueryParam("isbnThirteen") String isbnThirteen
             , @QueryParam("title") String title, @QueryParam("author") String author, @QueryParam("publisher") String publisher
             , @QueryParam("publishedDate") String publishedDate, @QueryParam("description") String description
@@ -286,6 +294,7 @@ public class LibraryRestful {
     @GET
     @Path("books/{start}/{end}")
     @Produces("application/json")
+    //TODO This method still needs to be done
     public Response restfulRangeOfBooks(@PathParam("start") int start, @PathParam("end") int end) {
 
         String testString = bookRelatedData.getAllBooks();
@@ -307,6 +316,7 @@ public class LibraryRestful {
     @GET
     @Path("books/{bookId}")
     @Produces("application/json")
+    //TODO This method still needs to be done
     public Response restfulGetSpecificBook(@PathParam("bookId") int bookId) {
 
         // Get a specific reader based on id provided.
@@ -329,6 +339,7 @@ public class LibraryRestful {
     @GET
     @Path("books/{bookId}/readers/")
     @Produces("application/json")
+    //TODO This method still needs to be done
     public Response restfulGetSpecificBooksReader(@PathParam("bookId") int bookId) {
 
         String bookReaderOutput = bookRelatedData.getSpecificBooksReader(bookId);
@@ -352,6 +363,7 @@ public class LibraryRestful {
     @PUT
     @Path("books/update/{bookId}")
     @Produces("application/json")
+    //TODO This method still needs to be done
     public Response updateBook(@QueryParam("bookId") int bookId, @QueryParam("isbnTen") String isbnTen, @QueryParam("isbnThirteen") String isbnThirteen
             , @QueryParam("title") String title, @QueryParam("author") String author, @QueryParam("publisher") String publisher
             , @QueryParam("publishedDate") String publishedDate, @QueryParam("description") String description
@@ -376,6 +388,7 @@ public class LibraryRestful {
      * @param bookId
      * @return
      */
+    //TODO This method works unless there is something in user_books table. Need to fix.
     @DELETE
     @Path("books/delete/{bookid}")
     @Produces("application/json")
@@ -402,6 +415,7 @@ public class LibraryRestful {
      * @param bookId
      * @return
      */
+    //TODO This method still needs to be done
     @POST
     @Path("books/checkout/{cardNumber}/{bookId}")
     @Produces("application/json")
@@ -429,6 +443,7 @@ public class LibraryRestful {
     @POST
     @Path("books/checkin/{cardNumber}/{bookId}")
     @Produces("application/json")
+    //TODO This method still needs to be done
     public Response checkInBook(@PathParam("cardNumber") int cardNumber, @PathParam("bookId") int bookId) {
         String output = "";
 
