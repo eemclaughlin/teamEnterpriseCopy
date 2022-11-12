@@ -200,30 +200,22 @@ public class LibraryRestful {
      * Create a new book using the ISBN number to get the book information from the Google Books API.
      * CREATE.r.u.d
      *
-     * http://localhost:8080/TeamEnterprise_war/library/books/addByISBN?isbn=9780-061122415
+     * http://localhost:8080/TeamEnterprise_war/library/books/addbyisbn?isbn=9780-061122415
      * @version 0.5 Needs Work
      *
      * @param isbn
      * @return A JSON object with the new books info.
      */
     @POST
-    @Path("books/addByISBN")
+    @Path("books/addbyisbn")
     @Produces("application/json")
-    //TODO This method still needs to be done
-    public Response createBookFromIsbn(@QueryParam("isbn") String isbn) {
-        String output = "";
+    //TODO This method works but doesn't insert ISBN.  Not sure how to fix.
+    public Response restfulCreateBookFromIsbn(@QueryParam("isbn") String isbn) {
 
-        // Remove dashes from ISBN number.
+        String newBookOutput = bookRelatedData.createBookFromIsbn(isbn);
 
-        // Get book from Google Books API
-
-        // Create a new book in the database.
-
-        // Return the new book to the requester.
-
-        // Return null if book not found.
-
-        return Response.status(200).entity(output).build();
+        // Return the new user to the requester.
+        return Response.status(200).entity(newBookOutput).build();
     }
 
     /**

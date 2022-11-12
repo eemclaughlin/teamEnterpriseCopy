@@ -6,6 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.enterprise.entity.Books;
 import org.enterprise.entity.User;
+import org.enterprise.googlebooksapi.ItemsItem;
+import org.enterprise.persistence.BookApiDao;
 import org.enterprise.persistence.GenericDao;
 import org.enterprise.util.DaoFactory;
 
@@ -29,14 +31,72 @@ public class BookApiService {
      * @param isbn the title of the book to get.
      * @return the book with the given title.
      */
-    public void createBookFromIsbn(String isbn) { // TODO: Update to return a book object.
-        // TODO integrate with database using GenericDao to create a new book.
-        // Create a new book object.
-        Book book = new Book();
+    public String createBookFromIsbn(String isbn) {
 
-        // Create a new bookDao.
+        logger.debug("ISBN with dashes: " + isbn);
 
-        // Return the new book.
+        // Remove the dashes from the ISBN.
+        removeDashes(isbn);
+
+        logger.debug("ISBN without dashes: " + isbn);
+
+        // Instantiate a new dao to get a book data response.
+        BookApiDao dao = new BookApiDao();
+
+        // Setup a bunch onf empty variables.
+        String title = null;
+        String author = null;
+        String publisher = null;
+        String publishedDate = null;
+        String description = null;
+        String isbnTen = null;
+        String isbnThirteen = null;
+        int pageCount = 0;
+        String language = null;
+        String smallImageLink = null;
+        String mediumImageLink = null;
+
+        // Get book data from Google Books API using the ISBN and populate into the variables.
+        for (ItemsItem item : dao.getResponseInfo(isbn).getItems()) {
+
+            isbnTen = null;
+            isbnThirteen = null;
+            title = item.getVolumeInfo().getTitle();
+            description = item.getVolumeInfo().getDescription();
+            publisher = item.getVolumeInfo().getPublisher();
+            publishedDate = item.getVolumeInfo().getPublishedDate() + "-01";
+            pageCount = item.getVolumeInfo().getPageCount();
+            language = item.getVolumeInfo().getLanguage();
+            smallImageLink = item.getVolumeInfo().getImageLinks().getSmallThumbnail();
+            mediumImageLink = item.getVolumeInfo().getImageLinks().getThumbnail();
+
+            // For each author in array at second half of "for"...
+            for(String arrayAuthor : item.getVolumeInfo().getAuthors()) {
+                //author = item.getVolumeInfo().getAuthors().toString();
+                author = arrayAuthor;
+            }
+        }
+
+        Books newBook = new Books(isbnTen, isbnThirteen, title, author, description, publisher, publishedDate, pageCount, language, smallImageLink, mediumImageLink);
+
+        GenericDao bookDao = new GenericDao(Books.class);
+        bookDao.insert(newBook);
+
+        // Return the new user as a string.
+        String bookInfo = newBook.toString();
+
+        logger.debug("Sending back new user info ..." + bookInfo);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(bookInfo);
+            logger.debug("ResultingJSONstring = " + json);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
     /**
@@ -242,8 +302,9 @@ public class BookApiService {
      * Service Method to Remove all non-numeric characters from a string.
      * @return A string with only numeric characters.
      */
-    private String removeAlphaCharacters(String isbn) {
+    private String removeDashes(String isbn) {
         // Remove dashes from ISBN number.
+        isbn = isbn.replaceAll("-", "");
 
         return isbn;
     }

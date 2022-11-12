@@ -39,7 +39,7 @@ public class Books {
     private String publishedDate;
 
     @Column(name = "pageCount")
-    private String pageCount;
+    private int pageCount;
 
     @Column(name = "language")
     private String language;
@@ -52,19 +52,19 @@ public class Books {
 
     /**
      * Instantiates a new Book.
+     * No arg constructor.
      */
     public Books() {}
 
     /**
      * Instantiates a new Book.
+     * Constructor with NO LOCATION field and NO ID field.
      *
-     * @param id             the id
      * @param isbnTen        the isbn ten
      * @param isbnThirteen   the isbn thirteen
      * @param title          the title
      * @param author         the author
      * @param description    the description
-     * @param location       the location
      * @param publisher      the publisher
      * @param publishedDate  the published date
      * @param pageCount      the page count
@@ -72,9 +72,9 @@ public class Books {
      * @param smallImageLink the small image link
      * @param medImageLink   the med image link
      */
-    public Books(int id, String isbnTen, String isbnThirteen, String title,
-                String author, String description, String location,
-                String publisher, String publishedDate, String pageCount,
+    public Books(String isbnTen, String isbnThirteen, String title,
+                String author, String description,
+                String publisher, String publishedDate, int pageCount,
                 String language, String smallImageLink, String medImageLink) {
         this.id = id;
         this.isbnTen = isbnTen;
@@ -258,7 +258,7 @@ public class Books {
      *
      * @return the page count
      */
-    public String getPageCount() {
+    public int getPageCount() {
         return pageCount;
     }
 
@@ -267,7 +267,7 @@ public class Books {
      *
      * @param pageCount the page count
      */
-    public void setPageCount(String pageCount) {
+    public void setPageCount(int pageCount) {
         this.pageCount = pageCount;
     }
 
