@@ -35,6 +35,29 @@ public class User {
     private Set<UsersBooks> usersBooks = new HashSet<>();
 
     /**
+     * No Argument Constructor for User
+     */
+    public User() {
+    }
+
+    /**
+     * Constructor for User.
+     *
+     * @param cardNumber  the card number
+     * @param firstName   the first name
+     * @param lastName    the last name
+     * @param email       the email
+     * @param phoneNumber the phone number
+     */
+    public User(int cardNumber, String firstName, String lastName, String email, String phoneNumber) {
+        this.cardNumber = cardNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
+    /**
      * Gets id.
      *
      * @return the id

@@ -6,9 +6,9 @@ import javax.persistence.*;
 /**
  * The type Book.
  */
-@Entity(name = "Book")
+@Entity(name = "Books")
 @Table(name = "books")
-public class Book {
+public class Books {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -39,7 +39,7 @@ public class Book {
     private String publishedDate;
 
     @Column(name = "pageCount")
-    private int pageCount;
+    private Integer pageCount;
 
     @Column(name = "language")
     private String language;
@@ -50,25 +50,21 @@ public class Book {
     @Column(name = "medImageLink")
     private String medImageLink;
 
-    @OneToOne(mappedBy = "books")
-    private UsersBooks usersBooks;
-
-
     /**
      * Instantiates a new Book.
+     * No arg constructor.
      */
-    public Book() {}
+    public Books() {}
 
     /**
      * Instantiates a new Book.
+     * Constructor with NO LOCATION field and NO ID field.
      *
-     * @param id             the id
      * @param isbnTen        the isbn ten
      * @param isbnThirteen   the isbn thirteen
      * @param title          the title
      * @param author         the author
      * @param description    the description
-     * @param location       the location
      * @param publisher      the publisher
      * @param publishedDate  the published date
      * @param pageCount      the page count
@@ -76,8 +72,8 @@ public class Book {
      * @param smallImageLink the small image link
      * @param medImageLink   the med image link
      */
-    public Book(int id, String isbnTen, String isbnThirteen, String title,
-                String author, String description, String location,
+    public Books(String isbnTen, String isbnThirteen, String title,
+                String author, String description,
                 String publisher, String publishedDate, int pageCount,
                 String language, String smallImageLink, String medImageLink) {
         this.id = id;
@@ -262,7 +258,7 @@ public class Book {
      *
      * @return the page count
      */
-    public int getPageCount() {
+    public Integer getPageCount() {
         return pageCount;
     }
 
@@ -271,7 +267,7 @@ public class Book {
      *
      * @param pageCount the page count
      */
-    public void setPageCount(int pageCount) {
+    public void setPageCount(Integer pageCount) {
         this.pageCount = pageCount;
     }
 
