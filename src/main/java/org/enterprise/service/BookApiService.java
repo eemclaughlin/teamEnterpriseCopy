@@ -14,11 +14,52 @@ import java.awt.print.Book;
 import java.util.List;
 
 /**
- * Class to take requests from the restful api and perform actions based on the request.
+ * Class to take requests from the REST API and perform actions based on the request.
  */
 public class BookApiService {
 
+    // Create a logger for this class.
     private final Logger logger = LogManager.getLogger(this.getClass());
+
+    /**
+     * Method to create a new book given and ISBN.
+     * Calls on the Google Books API to get all the information about the book.
+     * CREATE.r.u.d
+     *
+     * @param isbn the title of the book to get.
+     * @return the book with the given title.
+     */
+    public void createBookFromIsbn(String isbn) { // TODO: Update to return a book object.
+        // TODO integrate with database using GenericDao to create a new book.
+        // Create a new book object.
+        Book book = new Book();
+
+        // Create a new bookDao.
+
+        // Return the new book.
+    }
+
+    /**
+     * Create a new book manually with the given parameters entered at the REST API
+     * CREATE.r.u.d
+     */
+    public void createBookManually(/* Book object */) {
+        // TODO: Update to return a book object.
+        // TODO integrate with database using GenericDao to create a new book.
+        // Create a new book object.
+        Book book = new Book();
+
+        // Create a new bookDao.
+
+        // Return the new book.
+    }
+
+    /**
+     * Method to get all books from the database.
+     * c.READ.u.d
+     *
+     * @return a list of all books.
+     */
     public String getAllBooks() {
 
         GenericDao<Books> dao = DaoFactory.createDao(Books.class);
@@ -36,6 +77,13 @@ public class BookApiService {
         return json;
     }
 
+    /**
+     * Method to get a book by its id.
+     * c.READ.u.d
+     *
+     * @param bookId the id of the book to get.
+     * @return the book with the given id.
+     */
     public String getSpecificBook(int bookId) {
 
         // TODO integrate with database using GenericDao and retrieve user by an Id
@@ -59,6 +107,13 @@ public class BookApiService {
         return testBook;
     }
 
+    /**
+     * Method to get the current reader/user of a given book
+     * c.READ.u.d
+     *
+     * @param bookId the title of the book to get.
+     * @return the book with the given title.
+     */
     public String getSpecificBooksReader (int bookId) {
 
         // Instantiate both the order and user daos.
@@ -92,32 +147,30 @@ public class BookApiService {
         return finalString;
     }
 
-
-
-    public void createBookFromIsbn(String isbn) { // TODO: Update to return a book object.
-        // TODO integrate with database using GenericDao to create a new book.
+    /**
+     * Method to update a book with given info from the REST API.
+     * c.r.UPDATE.d
+     *
+     * @param bookId the id of the book to update.
+     * @return the book with the given id.
+     */
+    public void updateBook(/* Book object */) {
+        // TODO integrate with database using GenericDao to update a book.
         // Create a new book object.
-        Book book = new Book();
+        // Book book = new Book();
 
-        // Create a new bookDao.
+        // Update book in the database.
 
-        // Return the new book.
+        // Return the updated book.
     }
 
     /**
-     * Create a new book manually
+     * Method to delete a book by its id.
+     * c.r.u.DELETE
+     *
+     * @param bookId the id of the book to update.
+     * @return the book with the given id.
      */
-    public void createBookManually(/* Book object */) {
-        // TODO: Update to return a book object.
-        // TODO integrate with database using GenericDao to create a new book.
-        // Create a new book object.
-        Book book = new Book();
-
-        // Create a new bookDao.
-
-        // Return the new book.
-    }
-
     public boolean deleteBook(Integer bookId) {
         // TODO integrate with database using GenericDao to delete a book.
 
@@ -172,19 +225,8 @@ public class BookApiService {
         return success;
     }
 
-
-    public void updateBook(/* Book object */) {
-        // TODO integrate with database using GenericDao to update a book.
-        // Create a new book object.
-        // Book book = new Book();
-
-        // Update book in the database.
-
-        // Return the updated book.
-    }
-
     /**
-     * Remoce all non-numeric characters from a string.
+     * Service Method to Remove all non-numeric characters from a string.
      * @return A string with only numeric characters.
      */
     private String removeAlphaCharacters(String isbn) {
@@ -192,5 +234,4 @@ public class BookApiService {
 
         return isbn;
     }
-
 }

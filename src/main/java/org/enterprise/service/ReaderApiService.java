@@ -11,12 +11,44 @@ import org.enterprise.util.DaoFactory;
 import java.util.List;
 
 /**
- * Class to take requests from the restful api and perform actions based on the request.
+ * Class to take requests from the REST API and perform actions based on the request.
  */
 public class ReaderApiService {
 
+    // Create a logger for this class.
     private final Logger logger = LogManager.getLogger(this.getClass());
 
+    /**
+     * Create a new user.
+     * CREATE.r.u.d
+     *
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param phone
+     * @return
+     */
+    public User createUser(String firstName, String lastName, String email, String phone) {
+        // TODO integrate with database using GenericDao to create a new user.
+        // Create a new user object.
+        User user = new User();
+
+        // Create a new userDao.
+
+
+        // Insert the new user into the database.
+
+
+        // Return the new user.
+        return user;
+    }
+
+    /**
+     * Method to get all users/readers from the database.
+     * c.READ.u.d
+     *
+     * @return the list of all readers/users
+     */
     public String getAllReaders() {
         GenericDao<User> dao = DaoFactory.createDao(User.class);
         List<User> users = dao.getAll();
@@ -33,6 +65,13 @@ public class ReaderApiService {
         return json;
     }
 
+    /**
+     * Method to get a single user/reader from the database.
+     * c.READ.u.d
+     *
+     * @param readerId the id of the user to get.
+     * @return the user with the given id.
+     */
     public String getSpecificReader(int readerId) {
 
         // TODO integrate with database using GenericDao and retrieve user by an Id
@@ -56,6 +95,13 @@ public class ReaderApiService {
         return testReader;
     }
 
+    /**
+     * Method to get a reader/users checked out books.
+     * c.READ.u.d
+     *
+     * @param readerId the id of the book to get the current reader of.
+     * @return the current reader of the given book.
+     */
     public String getSpecificReadersBooks (int readerId) {
 
         // Instantiate both the order and user daos.
@@ -91,6 +137,8 @@ public class ReaderApiService {
 
     /**
      * Update an existing user.
+     * c.r.UPDATE.d
+     *
      * @return the updated user.
      */
     public User updateUser(User user) {
@@ -105,30 +153,9 @@ public class ReaderApiService {
     }
 
     /**
-     * Create a new user.
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param phone
-     * @return
-     */
-    public User createUser(String firstName, String lastName, String email, String phone) {
-        // TODO integrate with database using GenericDao to create a new user.
-        // Create a new user object.
-        User user = new User();
-
-        // Create a new userDao.
-
-
-        // Insert the new user into the database.
-
-
-        // Return the new user.
-        return user;
-    }
-
-    /**
      * Delete a user.
+     * c.r.u.DELETE
+     *
      * @param userId
      * @return
      */
