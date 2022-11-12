@@ -4,19 +4,69 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.enterprise.entity.Books;
 import org.enterprise.entity.User;
+import org.enterprise.entity.UsersBooks;
 import org.enterprise.persistence.GenericDao;
 import org.enterprise.util.DaoFactory;
 
 import java.util.List;
 
 /**
- * Class to take requests from the restful api and perform actions based on the request.
+ * Class to take requests from the REST API and perform actions based on the request.
  */
 public class ReaderApiService {
 
+    // Create a logger for this class.
     private final Logger logger = LogManager.getLogger(this.getClass());
 
+    /**
+     * Create a new user.
+     * CREATE.r.u.d
+     *
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param phone
+     * @return
+     */
+    public String createUser(String firstName, String lastName, String email, String phone) {
+
+        // Generate the user's card number.
+        int cardNumber = generateCardNumber();
+
+        // Create a new user object.
+        User newUser = new User(cardNumber, firstName, lastName, email, phone);
+
+        // Create a new userDao.
+        GenericDao userDao = new GenericDao(User.class);
+
+        // Insert the new user into the database.
+        userDao.insert(newUser);
+
+        // Return the new user as a string.
+        String userInfo = newUser.toString();
+
+        logger.debug("Sending back new user info ..." + userInfo);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(userInfo);
+            logger.debug("ResultingJSONstring = " + json);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    /**
+     * Method to get all users/readers from the database.
+     * c.READ.u.d
+     *
+     * @return the list of all readers/users
+     */
     public String getAllReaders() {
         GenericDao<User> dao = DaoFactory.createDao(User.class);
         List<User> users = dao.getAll();
@@ -33,114 +83,158 @@ public class ReaderApiService {
         return json;
     }
 
+    /**
+     * Method to get a single user/reader from the database.
+     * c.READ.u.d
+     *
+     * @param readerId the id of the user to get.
+     * @return the user with the given id.
+     */
     public String getSpecificReader(int readerId) {
 
-        // TODO integrate with database using GenericDao and retrieve user by an Id
-        //GenericDao userDao = new GenericDao(User.class);
-        //String specificUser = userDao.getById(Integer.parseInt(userId)).toString();
+        GenericDao<User> dao = DaoFactory.createDao(User.class);
 
-        // Create a null test user.
-        String testReader = null;
+        User user = (User) dao.getById(readerId);
 
-        // Check given readerId for a test return statement.
-        if (readerId == 1) {
-            testReader = "Eric ";
-        } else if (readerId == 2) {
-            testReader = "Frank ";
-        } else if (readerId == 3) {
-            testReader = "Eduardo ";
-        } else if (readerId == 4) {
-            testReader = "John ";
+        logger.debug("Sending back user with id " + readerId + "..." + user);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(user);
+            logger.debug("ResultingJSONstring = " + json);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
-
-        return testReader;
+        return json;
     }
 
+    /**
+     * Method to get a reader/users checked out books.
+     * c.READ.u.d
+     *
+     * @param readerId the id of the book to get the current reader of.
+     * @return the current reader of the given book.
+     */
     public String getSpecificReadersBooks (int readerId) {
 
-        // Instantiate both the order and user daos.
-        //GenericDao userDao = new GenericDao(User.class);
-        //GenericDao bookDao = new GenericDao(Order.class);
+        //Instantiate both the books and readers daos.
+        GenericDao userDao = new GenericDao(User.class);
+        GenericDao usersBooksDao = new GenericDao(UsersBooks.class);
 
         // Get the user object by the given id.
-        // User user = (User)userDao.getById(Integer.parseInt(userId));
+        User user = (User) userDao.getById(readerId);
 
-        // Use the user object to find order for just that user.
-        // String specificUsersRoles = orderDao.getByPropertyEqual("user", user).toString();
+        // Use the user object to find books for just that user.
+        List<Books> specificUsersBooks = usersBooksDao.getByPropertyEqual("user", user);
 
-        // Create a test reader and a test book
-        String testReader = null;
-        String book = "Java in 21 Days";
+        logger.debug("Sending back ALL books for one user..." + specificUsersBooks);
 
-        // Give a reader based on id given
-        if (readerId == 1) {
-            testReader = "Eric ";
-        } else if (readerId == 2) {
-            testReader = "Frank ";
-        } else if (readerId == 3) {
-            testReader = "Eduardo ";
-        } else if (readerId == 4) {
-            testReader = "John ";
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(specificUsersBooks);
+            logger.debug("ResultingJSONstring = " + json);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
-
-        // Combine test reader with test book.
-        String finalString = testReader + " is reading " + book;
-
-        return finalString;
+        return json;
     }
 
     /**
      * Update an existing user.
+     * c.r.UPDATE.d
+     *
      * @return the updated user.
      */
-    public User updateUser(User user) {
-        // TODO integrate with database using GenericDao to update a user.
-        // Create a new user object.
-        // User user = new User();
+    public String updateReader(int readerId, String firstName, String lastName, String email, String phone) {
 
-        // Update user in the database.
+            // Create a new userDao.
+            GenericDao userDao = new GenericDao(User.class);
 
-        // Return the updated user.
-        return user;
-    }
+            // Get the user object by the given id.
+            User user = (User) userDao.getById(readerId);
 
-    /**
-     * Create a new user.
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param phone
-     * @return
-     */
-    public User createUser(String firstName, String lastName, String email, String phone) {
-        // TODO integrate with database using GenericDao to create a new user.
-        // Create a new user object.
-        User user = new User();
+            // Update the user object with the new information.
+            if (firstName != null) {
+                user.setFirstName(firstName);
+            }
+            if (lastName != null) {
+                user.setLastName(lastName);
+            }
+            if (email != null) {
+                user.setEmail(email);
+            }
+            if (phone != null) {
+                user.setPhoneNumber(phone);
+            }
 
-        // Create a new userDao.
+            // Update the user in the database.
+            userDao.saveOrUpdate(user);
 
+            // Return the updated user as a string.
+            // User userInfo = (User) userDao.getById(readerId);
+            String userInfo = userDao.getById(readerId).toString();
 
-        // Insert the new user into the database.
+            logger.debug("Sending back updated user info ..." + userInfo);
 
+            ObjectMapper mapper = new ObjectMapper();
+            String json = null;
+            try {
+                json = mapper.writeValueAsString(userInfo);
+                logger.debug("ResultingJSONstring = " + json);
 
-        // Return the new user.
-        return user;
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return json;
     }
 
     /**
      * Delete a user.
-     * @param userId
+     * c.r.u.DELETE
+     *
+     * @param readerId
      * @return
      */
-    public boolean deleteUser(int userId) {
-        // TODO integrate with database using GenericDao to delete a user.
-        // Create a new user object.
-        boolean success = false;
-        User user = new User();
+    public String deleteReader(int readerId) {
 
-        // Delete user from the database.
+            // Create a new userDao.
+            GenericDao userDao = new GenericDao(User.class);
 
-        // Return if the delete was successful.
-        return success;
+            // Get the user object by the given id.
+            User user = (User) userDao.getById(readerId);
+
+            // Delete the user from the database.
+            userDao.delete(user);
+
+            // Return the deleted user as a string.
+            String userInfo = user.toString();
+
+            logger.debug("Sending back deleted user info ..." + userInfo);
+
+            ObjectMapper mapper = new ObjectMapper();
+            String json = null;
+            try {
+                json = mapper.writeValueAsString(userInfo);
+                logger.debug("ResultingJSONstring = " + json);
+
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return json;
+    }
+
+    private int generateCardNumber() {
+
+        int min = 100;
+        int max = 999;
+
+        // Generate a random number between 100 and 999.
+        int cardNumber = (int) (Math.random() * (max - min + 1) + min);
+
+        return cardNumber;
     }
 }

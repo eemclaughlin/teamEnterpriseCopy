@@ -1,5 +1,6 @@
 package org.enterprise.restful;
 
+import org.enterprise.entity.Books;
 import org.enterprise.service.BookApiService;
 import org.enterprise.service.ReaderApiService;
 
@@ -7,8 +8,12 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 /**
- * Restful api to working with readers and/or books by user
- * @author eemclaughlin
+ * Rest API for tracking a single users books and who they loaned them to.
+ * Also uses Google Books to help populate book data into the database.
+ * <p>
+ * /library is the base level for the Rest API
+ *
+ * @author Team Enterprise
  */
 @Path("/library")
 public class LibraryRestful {
@@ -19,10 +24,10 @@ public class LibraryRestful {
 
     /**
      * Base level for the user api
-     * Hitting this will list all users in database
+     * Hitting this level will give the user a welcome message/instructions.
      * http://localhost:8080/TeamEnterprise_war/library/
      *
-     * @return
+     * @return introOutput Introductory message for the user.
      */
     @GET
     @Produces("application/json")
@@ -38,14 +43,46 @@ public class LibraryRestful {
     }
 
     // ***********************************************************************************
-    // BELOW IS START OF READERS BASED RESTFUL CALLS
+    // BELOW IS START OF READERS/USERS BASED RESTFUL CALLS
     // ***********************************************************************************
+    /**
+     * Create a new reader/user and add to database.
+     * CREATE.r.u.d
+     *
+     * http://localhost:8080/TeamEnterprise_war/library/readers/add?firstName="Bob"...
+     * @version 1.0 Working
+     *
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param phone
+     * @return A JSON object with the new users info including their card number.
+     */
+    @POST
+    @Path("readers/add")
+    @Produces("application/json")
+    public Response restfulCreateUser(
+            @QueryParam("firstname") String firstName,
+            @QueryParam("lastname") String lastName,
+            @QueryParam("email") String email,
+            @QueryParam("phone") String phone)
+    {
+
+        // Call createUser method from ReaderApiService to create a new user.
+        String newUserJson = readerRelatedData.createUser(firstName, lastName, email, phone);
+
+        // Return the new user to the requester.
+        return Response.status(200).entity(newUserJson).build();
+    }
 
     /**
-     * Allows user to get a list of all readers
+     * Get a list of all readers/users
+     * c.READ.u.d
+     *
+     * @version 1.0 Working
      * http://localhost:8080/TeamEnterprise_war/library/readers
      *
-     * @return
+     * @return json all readers in the database
      */
     @GET
     @Path("readers")
@@ -59,10 +96,13 @@ public class LibraryRestful {
 
     /**
      * Get a specific reader by inputting an id
+     * c.READ.u.d
+     *
      * http://localhost:8080/TeamEnterprise_war/library/readers/1
+     * @version 1.0 Working
      *
      * @param readerId
-     * @return
+     * @return json specific reader
      */
     @GET
     @Path("readers/{readerId}")
@@ -77,9 +117,11 @@ public class LibraryRestful {
     }
 
     /**
-     * Requesters can add the additional books keyword and a userid to get all books that
-     * reader has borrowed
+     * Get a list of all books that a specific reader has checked out/borrowed
+     * c.READ.u.d
+     *
      * http://localhost:8080/TeamEnterprise_war/library/readers/1/books
+     * @version 0.1 Working
      *
      * @param readerId
      * @return
@@ -87,6 +129,7 @@ public class LibraryRestful {
     @GET
     @Path("readers/{readerId}/books/")
     @Produces("application/json")
+    //TODO This is working but outputs the user for each book.  Needs filtering.
     public Response restfulGetSpecificReadersBooks(@PathParam("readerId") int readerId) {
 
         String readerBookOutput = readerRelatedData.getSpecificReadersBooks(readerId);
@@ -95,158 +138,91 @@ public class LibraryRestful {
         return Response.status(200).entity(readerBookOutput).build();
     }
 
+    /**
+     * Update a users/readers information
+     * c.r.UPDATE.d
+     *
+     * http://localhost:8080/TeamEnterprise_war/library/readers/1/update?firstName="Bob"...
+     * @version 1.0 Working
+     *
+     * @param readerId   readerid
+     * @param firstName  the first name
+     * @param lastName   the last name
+     * @param email      the email
+     * @param phone      the phone
+     * @return the response
+     */
+    @PUT
+    @Path("readers/update/{readerid}")
+    @Produces("application/json")
+    public Response restfulUpdateReader(
+            @PathParam("readerid") int readerId,
+            @QueryParam("firstname") String firstName,
+            @QueryParam("lastname") String lastName,
+            @QueryParam("email") String email,
+            @QueryParam("phone") String phone)
+    {
+
+        // Take readerID and new parameters and send to update user method.  Return new user info.
+        String updatedUser = readerRelatedData.updateReader(readerId, firstName, lastName, email, phone);
+
+        // Return the response to the GET.
+        return Response.status(200).entity(updatedUser).build();
+    }
+
+    /**
+     * Delete a reader/user.
+     * c.r.u.DELETE
+     *
+     * http://localhost:8080/TeamEnterprise_war/library/readers/delete/1
+     * @version 0.5 Needs Work
+     *
+     * @return the response
+     */
+    @DELETE
+    @Path("readers/delete/{readerid}")
+    @Produces("application/json")
+    //TODO This is largely done but can't delete users who are in UsersBooks table. Need fix.
+    public Response restfulDeleteReader(@PathParam("readerid") int readerId) {
+
+        // Call on delete reader method to delete the reader.
+        String message = readerRelatedData.deleteReader(readerId);
+
+        // Return the result to the requester.
+        return Response.status(200).entity(message).build();
+    }
+
     // ***********************************************************************************
     // BELOW IS START OF BOOKS BASED RESTFUL CALLS
     // ***********************************************************************************
-
-    /**
-     * Get a list of all books in the database
-     * <p>
-     * http://localhost:8080/TeamEnterprise_war/library/books
-     *
-     * @return
-     */
-    @GET
-    @Path("books")
-    @Produces("application/json")
-    public Response restfulGetAllBooks() {
-
-        String json = bookRelatedData.getAllBooks();
-
-        // Send the results out to the GET
-        return Response.status(200).entity(json).build();
-    }
-
-    /**
-     * Get a list of books in the database limited to the number of books requested.
-     * <p>
-     * http://localhost:8080/TeamEnterprise_war/library/books
-     *
-     * @return
-     */
-    @GET
-    @Path("books/{start}/{end}")
-    @Produces("application/json")
-    public Response restfulRangeOfBooks(@PathParam("start") int start, @PathParam("end") int end) {
-
-        String testString = bookRelatedData.getAllBooks();
-
-        // Send the results out to the GET
-        return Response.status(200).entity(testString).build();
-    }
-
-    /**
-     * http://localhost:8080/TeamEnterprise_war/library/books/1
-     *
-     * @param bookId
-     * @return
-     */
-    @GET
-    @Path("books/{bookId}")
-    @Produces("application/json")
-    public Response restfulGetSpecificBook(@PathParam("bookId") int bookId) {
-
-        // Get a specific reader based on id provided.
-        String specificBook = bookRelatedData.getSpecificBook(bookId);
-
-        // Send the results out to the GET
-        return Response.status(200).entity(specificBook).build();
-    }
-
-    /**
-     * Get who have based a specific book.
-     * <p>
-     * <p>
-     * <p>
-     * http://localhost:8080/TeamEnterprise_war/library/books/1/readers
-     *
-     * @param bookId
-     * @return
-     */
-    @GET
-    @Path("books/{bookId}/readers/")
-    @Produces("application/json")
-    public Response restfulGetSpecificBooksReader(@PathParam("bookId") int bookId) {
-
-        String bookReaderOutput = bookRelatedData.getSpecificBooksReader(bookId);
-
-        // Return the response to the GET.
-        return Response.status(200).entity(bookReaderOutput).build();
-    }
-
-    /**
-     * Create a new user.
-     *
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param phone
-     * @return A JSON object with the new users info including their card number.
-     */
-    @POST
-    @Path("users/add")
-    @Produces("application/json")
-    public Response createUser(@QueryParam("firstName") String firstName, @QueryParam("lastName") String lastName, @QueryParam("email") String email, @QueryParam("phone") String phone) {
-        String output = "";
-
-        // Generate a new card number for the user.
-
-        // Create a new user in the database.
-
-        // Return the new user to the requester.
-
-        return Response.status(200).entity(output).build();
-    }
-
-    /**
-     * Delete a user.
-     *
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param phone
-     * @return
-     */
-    @DELETE
-    @Path("users/delete/{cardNumber}")
-    @Produces("application/json")
-    public Response deleteUser(@PathParam("cardNumber") int cardNumber) {
-        String output = "";
-
-        // Delete the user from the database.
-
-        // Return the result to the requester.
-
-        return Response.status(200).entity(output).build();
-    }
-
     /**
      * Create a new book using the ISBN number to get the book information from the Google Books API.
+     * CREATE.r.u.d
+     *
+     * http://localhost:8080/TeamEnterprise_war/library/books/addbyisbn?isbn=9780-061122415
+     * @version 0.5 Needs Work
      *
      * @param isbn
      * @return A JSON object with the new books info.
      */
     @POST
-    @Path("books/addByISBN")
+    @Path("books/addbyisbn")
     @Produces("application/json")
-    public Response createBookFromIsbn(@QueryParam("isbn") String isbn) {
-        String output = "";
+    //TODO This method works but doesn't insert ISBN.  Not sure correct code to get isbn.
+    public Response restfulCreateBookFromIsbn(@QueryParam("isbn") String isbn) {
 
-        // Remove dashes from ISBN number.
+        String newBookOutput = bookRelatedData.createBookFromIsbn(isbn);
 
-        // Get book from Google Books API
-
-        // Create a new book in the database.
-
-        // Return the new book to the requester.
-
-        // Return null if book not found.
-
-        return Response.status(200).entity(output).build();
+        // Return the new user to the requester.
+        return Response.status(200).entity(newBookOutput).build();
     }
 
     /**
-     * Add a new book to the database manually.
+     * Create a new book and add to the database manually.
+     * CREATE.r.u.d
+     *
+     * http://localhost:8080/TeamEnterprise_war/library/books/addManually?isbnTen=1234567890.....
+     * @version 0.5 Needs Work     *
      *
      * @param isbnTen
      * @param isbnThirteen
@@ -262,6 +238,7 @@ public class LibraryRestful {
     @POST
     @Path("books/addManually")
     @Produces("application/json")
+    //TODO This method still needs to be done
     public Response createBookManually(@QueryParam("isbnTen") String isbnTen, @QueryParam("isbnThirteen") String isbnThirteen
             , @QueryParam("title") String title, @QueryParam("author") String author, @QueryParam("publisher") String publisher
             , @QueryParam("publishedDate") String publishedDate, @QueryParam("description") String description
@@ -277,67 +254,107 @@ public class LibraryRestful {
     }
 
     /**
-     * Delete a book.
+     * Get a list of all books in the database
+     * c.READ.u.d
      *
-     * @param bookId
-     * @return
+     * http://localhost:8080/TeamEnterprise_war/library/books
+     * @version 1.0 Working
+     *
+     * @return json response containing all books
      */
-    @DELETE
-    @Path("books/delete/{bookId}")
+    @GET
+    @Path("books")
     @Produces("application/json")
-    public Response deleteBook(@QueryParam("bookId") int bookId) {
-        String output = "";
+    public Response restfulGetAllBooks() {
 
-        // Delete the book from the database.
+        String json = bookRelatedData.getAllBooks();
 
-        // Return the new book to the requester.
-
-        return Response.status(200).entity(output).build();
+        // Send the results out to the GET
+        return Response.status(200).entity(json).build();
     }
 
     /**
-     * Check out a book.
+     * Get a list of books in the database limited to the number of books requested.
+     * c.READ.u.d
      *
-     * @param cardNumber
-     * @param bookId
+     * http://localhost:8080/TeamEnterprise_war/library/books/1/5
+     * @version 0.5 Needs Work
+     *
      * @return
      */
-    @POST
-    @Path("books/checkout/{cardNumber}/{bookId}")
+    @GET
+    @Path("books/{start}/{end}")
     @Produces("application/json")
-    public Response checkOutBook(@PathParam("cardNumber") int cardNumber, @PathParam("bookId") int bookId) {
-        String output = "";
+    //TODO This method still needs to be done
+    public Response restfulRangeOfBooks(@PathParam("start") int start, @PathParam("end") int end) {
 
-        // Check out the book.
+        String testString = bookRelatedData.getAllBooks();
 
-        // Return the new book to the requester.
-
-        return Response.status(200).entity(output).build();
+        // Send the results out to the GET
+        return Response.status(200).entity(testString).build();
     }
 
     /**
-     * Check in a book.
+     * Get a specific book by bookID
+     * c.READ.u.d
      *
-     * @param cardNumber
+     * http://localhost:8080/TeamEnterprise_war/library/books/1
+     * @version 0.5 Needs Work
+     *
      * @param bookId
      * @return
      */
-    @POST
-    @Path("books/checkin/{cardNumber}/{bookId}")
+    @GET
+    @Path("books/{bookId}")
     @Produces("application/json")
-    public Response checkInBook(@PathParam("cardNumber") int cardNumber, @PathParam("bookId") int bookId) {
-        String output = "";
+    //TODO This method still needs to be done
+    public Response restfulGetSpecificBook(@PathParam("bookId") int bookId) {
 
-        // Check in the book.
+        // Get a specific reader based on id provided.
+        String specificBook = bookRelatedData.getSpecificBook(bookId);
 
-        // Return the new book to the requester.
-
-        return Response.status(200).entity(output).build();
+        // Send the results out to the GET
+        return Response.status(200).entity(specificBook).build();
     }
 
+    /**
+     * By Book, get the reader who currently has the book checked out.
+     * c.READ.u.d
+     *
+     * http://localhost:8080/TeamEnterprise_war/library/books/1/readers
+     * @version 0.5 Needs Work
+     *
+     * @param bookId
+     * @return
+     */
+    @GET
+    @Path("books/{bookId}/readers/")
+    @Produces("application/json")
+    //TODO This method still needs to be done
+    public Response restfulGetSpecificBooksReader(@PathParam("bookId") int bookId) {
+
+        String bookReaderOutput = bookRelatedData.getSpecificBooksReader(bookId);
+
+        // Return the response to the GET.
+        return Response.status(200).entity(bookReaderOutput).build();
+    }
+
+    /**
+     * Update a book in the database.
+     * c.r.UPDATE.d
+     *
+     * http://localhost:8080/TeamEnterprise_war/library/books/update?bookId=1&
+     * isbnTen=1234567890&isbnThirteen=1234567890123&title=TestTitle&author=TestAuthor&
+     * publisher=TestPublisher&publishedDate=2017-01-01&description=TestDescription&pageCount=123&language=TestLanguage
+     * @version 0.5 Needs Work
+     *
+     * @param bookId
+     * @return
+     */
     @PUT
     @Path("books/update/{bookId}")
     @Produces("application/json")
+    //TODO This method still needs to be done
     public Response updateBook(@QueryParam("bookId") int bookId, @QueryParam("isbnTen") String isbnTen, @QueryParam("isbnThirteen") String isbnThirteen
             , @QueryParam("title") String title, @QueryParam("author") String author, @QueryParam("publisher") String publisher
             , @QueryParam("publishedDate") String publishedDate, @QueryParam("description") String description
@@ -352,16 +369,78 @@ public class LibraryRestful {
         return Response.status(200).entity(output).build();
     }
 
-    @PUT
-    @Path("users/update/{cardNumber}")
+    /**
+     * Delete a book.
+     * c.r.u.DELETE
+     *
+     * http://localhost:8080/TeamEnterprise_war/library/books/delete?bookId=1
+     * @version 0.5 Needs Work
+     *
+     * @param bookId
+     * @return
+     */
+    //TODO This method works unless there is something in user_books table. Need to fix.
+    @DELETE
+    @Path("books/delete/{bookid}")
     @Produces("application/json")
-    public Response updateUser(@PathParam("cardNumber") int cardNumber, @QueryParam("firstName") String firstName
-            , @QueryParam("lastName") String lastName, @QueryParam("email") String email, @QueryParam("phone") String phone) {
+    public Response restfulDeleteBook(@PathParam("bookid") Integer bookId) {
 
+        String json = bookRelatedData.deleteBook(bookId);
+
+        // Send the results out to the GET
+        return Response.status(200).entity(json).build();
+    }
+
+    // ***********************************************************************************
+    // BELOW IS START OF USERS_ BOOKS BASED RESTFUL CALLS
+    // ***********************************************************************************
+
+    /**
+     * Check out a book to a reader by cardNumber.
+     * CREATE.r.u.d
+     *
+     * http://localhost:8080/TeamEnterprise_war/library/books/checkout/123/1
+     * @version 0.1 Needs Much Work
+     *
+     * @param cardNumber
+     * @param bookId
+     * @return
+     */
+    //TODO This method still needs to be done
+    @POST
+    @Path("books/checkout/{cardNumber}/{bookId}")
+    @Produces("application/json")
+    public Response checkOutBook(@PathParam("cardNumber") int cardNumber, @PathParam("bookId") int bookId) {
         String output = "";
-        // Update the user in the database.
 
-        // Return the new user to the requesters.
+        // Check out the book.
+
+        // Return the new book to the requester.
+
+        return Response.status(200).entity(output).build();
+    }
+
+    /**
+     * Check in a book from a user
+     * c.r.u.DELETE
+     *
+     * http://localhost:8080/TeamEnterprise_war/library/books/checkin/123/1
+     * @version 0.1 Needs Much Work
+     *
+     * @param cardNumber
+     * @param bookId
+     * @return
+     */
+    @POST
+    @Path("books/checkin/{cardNumber}/{bookId}")
+    @Produces("application/json")
+    //TODO This method still needs to be done
+    public Response checkInBook(@PathParam("cardNumber") int cardNumber, @PathParam("bookId") int bookId) {
+        String output = "";
+
+        // Check in the book.
+
+        // Return the new book to the requester.
 
         return Response.status(200).entity(output).build();
     }
