@@ -377,18 +377,14 @@ public class LibraryRestful {
      * @return
      */
     @DELETE
-    @Path("books/delete")
+    @Path("books/delete/{bookid}")
     @Produces("application/json")
-    public Response deleteBook(@QueryParam("bookid") Integer bookId) {
+    public Response restfulDeleteBook(@PathParam("bookid") Integer bookId) {
 
-        // Delete the book from the database.
-        boolean successMessage = bookRelatedData.deleteBook(bookId);
+        String json = bookRelatedData.deleteBook(bookId);
 
-        if (successMessage = true) {
-            return Response.status(200).entity("Book deleted successfully.").build();
-        } else {
-            return Response.status(200).entity("Book not deleted.").build();
-        }
+        // Send the results out to the GET
+        return Response.status(200).entity(json).build();
     }
 
     // ***********************************************************************************

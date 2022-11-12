@@ -151,7 +151,7 @@ public class BookApiService {
      * Method to update a book with given info from the REST API.
      * c.r.UPDATE.d
      *
-     * @param bookId the id of the book to update.
+     *
      * @return the book with the given id.
      */
     public void updateBook(/* Book object */) {
@@ -171,22 +171,35 @@ public class BookApiService {
      * @param bookId the id of the book to update.
      * @return the book with the given id.
      */
-    public boolean deleteBook(Integer bookId) {
+    public String deleteBook(Integer bookId) {
         // TODO integrate with database using GenericDao to delete a book.
 
         boolean success = false;
 
-        GenericDao bookDao = new GenericDao(Book.class);
-        Book bookToDelete = (Book)bookDao.getById(bookId);
-
+        GenericDao<Books> bookDao = new GenericDao(Books.class);
+        Books bookToDelete = bookDao.getById(bookId);
 
         if (bookToDelete != null) {
             bookDao.delete(bookToDelete);
             success = true;
         }
 
-        // Return success or failure.
-        return success;
+        logger.debug("Was book deleted: " + success);
+
+        if (success) {
+            ObjectMapper mapper = new ObjectMapper();
+            String json = null;
+            try {
+                json = mapper.writeValueAsString(bookToDelete);
+                logger.debug("ResultingJSONstring = " + json);
+
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return json;
+        } else {
+            return "There was an error deleting the book.";
+        }
     }
 
     /**
