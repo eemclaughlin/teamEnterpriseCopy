@@ -50,17 +50,23 @@
 ### Weekly Meeting Tasks Assigned/Completed
 - [x] Read up on Restful API Implementations
 - [x] Get project and database working together in your environments
-- [ ] Get entities up and running.
+- [x] Get entities up and running.
 - [ ] Get API methods up and running.
 
 ## Week 3
 ### Meeting Notes (11/10/22)
-> 
+> We went through some of the stubs and got them working.
+### Meeting Notes (11/11/22)
+> We met to finish up on the methods for the methods.
 ### Meeting Notes (11/13/22)
 >
 ### Blockers
 >
 ### Weekly Meeting Tasks Assigned/Completed
+[ ] Git API methods up and running
+[ ] Work out final bugs
+[ ] Get documentation working
+[ ] Get war up in AWS.
 [ ] Finish up design
 [ ] Create presentation
 
