@@ -58,7 +58,7 @@ public class BookApiDao {
             responseInfo = mapper.readValue(response, ApiIsdnBook.class);
         } catch (JsonProcessingException e) {
             // TODO Set up Logging and Write This into said log.
-            e.printStackTrace();
+            logger.error("JSON Processing error: " + e);
         }
         // Return the response.
         return responseInfo;
