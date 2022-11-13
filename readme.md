@@ -31,4 +31,4 @@ populate supplemental book data.
 * [Team Resume](designDocuments/resume.md)
 * [Team Charter](designDocuments/charter.md)
 * [Project Plan](designDocuments/projectPlan.md)
-* [Full API Documentation (SWAGGER LINK WILL BE ADDED WHEN DONE)]()
+* [Full API Documentation](https://app.swaggerhub.com/apis-docs/EBURZLAFF_1/LibraryAPI/1.0.0)
