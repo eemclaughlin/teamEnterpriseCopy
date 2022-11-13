@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.enterprise.entity.Books;
 import org.enterprise.entity.User;
-import org.enterprise.entity.UsersBooks;
+
 import org.enterprise.googlebooksapi.ItemsItem;
 import org.enterprise.persistence.BookApiDao;
 import org.enterprise.persistence.GenericDao;
@@ -191,18 +191,19 @@ public class BookApiService {
     public String getSpecificBooksReader (int bookId) {
 
         GenericDao bookDao = new GenericDao(Books.class);
-        GenericDao usersBooksDao = new GenericDao(UsersBooks.class);
+        GenericDao userDao = new GenericDao(User.class);
+        // GenericDao usersBooksDao = new GenericDao(UsersBooks.class);
 
         Books book = (Books) bookDao.getById(bookId);
 
-        List<User> specificBooksReader = usersBooksDao.getByPropertyEqual("book", book);
+        List<User> specificBooksReader = userDao.getByPropertyEqual("book", book);
 
         logger.debug("Sending specific Books reader: " + specificBooksReader);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
         try {
-            json = mapper.writeValueAsString(book);
+            json = mapper.writeValueAsString(specificBooksReader);
             logger.debug("ResultingJSONstring = " + json);
 
         } catch (JsonProcessingException e) {
@@ -327,8 +328,6 @@ public class BookApiService {
         logger.debug("User id: " + userId);
         logger.debug("Book id: " + bookId);
 
-        GenericDao<UsersBooks> usersBooksDao = new GenericDao(UsersBooks.class);
-
         GenericDao<Books> bookDao = new GenericDao(Books.class);
         GenericDao<User> userDao = new GenericDao(User.class);
 
@@ -338,9 +337,10 @@ public class BookApiService {
         logger.debug("User: " + user);
         logger.debug("Book: " + book);
 
-        UsersBooks usersBooks = new UsersBooks(user, book);
+        book.setUser(user);
 
-        usersBooksDao.insert(usersBooks);
+        // Set the book to checked out.
+        bookDao.saveOrUpdate(book);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
@@ -357,19 +357,27 @@ public class BookApiService {
     /**
      * Check in a book
      * @param bookId
-     * @param userId
      * @return Success or failure of the check in.
      */
-    public boolean checkInBook(int bookId, int userId) {
-        // TODO integrate with database using GenericDao to check in a book.
-        boolean success = false;
+    public String checkInBook(int bookId) {
 
-        // Should fail if the book is not currently checked out.
+        GenericDao<Books> bookDao = new GenericDao(Books.class);
+        Books book = bookDao.getById(bookId);
 
-        // Check in book from the database.
+        book.setUser(null);
 
-        // Return if the check in was successful.
-        return success;
+        bookDao.saveOrUpdate(book);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(book);
+            logger.debug("ResultingJSONstring = " + json);
+
+        } catch (JsonProcessingException e) {
+            logger.error("JSON Processing Exception: " + e);
+        }
+        return json;
     }
 
     /**

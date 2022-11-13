@@ -1,5 +1,7 @@
 package org.enterprise.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.HashSet;
@@ -52,6 +54,11 @@ public class Books {
     @Column(name = "medImageLink")
     private String medImageLink;
 
+    //JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "users_id", foreignKey = @ForeignKey(name = "books_users"))
+    private User user;
+
 
     /**
      * Instantiates a new Book.
@@ -74,10 +81,11 @@ public class Books {
      * @param language       the language
      * @param smallImageLink the small image link
      * @param medImageLink   the med image link
+     *
      */
     public Books(String isbnTen, String isbnThirteen, String title,
                 String author, String description,
-                String publisher, String publishedDate, int pageCount,
+                String publisher, String publishedDate, Integer pageCount,
                 String language, String smallImageLink, String medImageLink) {
         this.id = id;
         this.isbnTen = isbnTen;
@@ -92,6 +100,7 @@ public class Books {
         this.language = language;
         this.smallImageLink = smallImageLink;
         this.medImageLink = medImageLink;
+        //this.user = user;
     }
 
     /**
@@ -326,6 +335,29 @@ public class Books {
      */
     public void setMedImageLink(String medImageLink) {
         this.medImageLink = medImageLink;
+    }
+
+    public String getUser() {
+
+        if (user == null) {
+            return "No User";
+        } else {
+
+            String firstName = user.getFirstName();
+
+            String lastName = user.getLastName();
+
+            String email = user.getEmail();
+
+            String phoneNumber = user.getPhoneNumber();
+
+            String fullString = firstName + " " + lastName + " " + email + " " + phoneNumber;
+            return fullString;
+        }
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

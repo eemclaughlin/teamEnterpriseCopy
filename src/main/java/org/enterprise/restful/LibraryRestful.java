@@ -385,7 +385,7 @@ public class LibraryRestful {
      * CREATE.r.u.d
      *
      * http://localhost:8080/TeamEnterprise_war/library/books/checkout/1/1
-     * @version 0.1 Needs Much Work
+     * @version 1.0 Working
      *
      * @param userId
      * @param bookId
@@ -410,21 +410,18 @@ public class LibraryRestful {
      * http://localhost:8080/TeamEnterprise_war/library/books/checkin/123/1
      * @version 0.1 Needs Much Work
      *
-     * @param cardNumber
      * @param bookId
      * @return
      */
     @POST
-    @Path("books/checkin/{cardNumber}/{bookId}")
+    @Path("books/checkin/{bookId}")
     @Produces("application/json")
     //TODO This method still needs to be done
-    public Response checkInBook(@PathParam("cardNumber") int cardNumber, @PathParam("bookId") int bookId) {
-        String output = "";
+    public Response checkInBook(@PathParam("bookId") int bookId) {
 
-        // Check in the book.
+        String output = bookRelatedData.checkInBook(bookId);
 
-        // Return the new book to the requester.
-
+        // Return the response to the requester.
         return Response.status(200).entity(output).build();
     }
 }

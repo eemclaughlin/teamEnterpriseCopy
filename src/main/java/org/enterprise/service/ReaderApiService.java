@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.enterprise.entity.Books;
 import org.enterprise.entity.User;
-import org.enterprise.entity.UsersBooks;
 import org.enterprise.persistence.GenericDao;
 import org.enterprise.util.DaoFactory;
 
@@ -121,13 +120,13 @@ public class ReaderApiService {
 
         //Instantiate both the books and readers daos.
         GenericDao userDao = new GenericDao(User.class);
-        GenericDao usersBooksDao = new GenericDao(UsersBooks.class);
+        GenericDao booksDao = new GenericDao(Books.class);
 
         // Get the user object by the given id.
         User user = (User) userDao.getById(readerId);
 
         // Use the user object to find books for just that user.
-        List<Books> specificUsersBooks = usersBooksDao.getByPropertyEqual("user", user);
+        List<Books> specificUsersBooks = booksDao.getByPropertyEqual("user", user);
 
         logger.debug("Sending back ALL books for one user..." + specificUsersBooks);
 
