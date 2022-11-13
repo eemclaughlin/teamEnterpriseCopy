@@ -50,7 +50,7 @@ public class LibraryRestful {
      * CREATE.r.u.d
      *
      * http://localhost:8080/TeamEnterprise_war/library/readers/add?firstName="Bob"...
-     * @version 1.0 Working
+     * @version 1.5 Working
      *
      * @param firstName
      * @param lastName
@@ -76,10 +76,10 @@ public class LibraryRestful {
     }
 
     /**
-     * Get a list of all readers/users
+     * Get a list of all readers/users AND the books they have checked out.
      * c.READ.u.d
      *
-     * @version 1.0 Working
+     * @version 1.5 Working
      * http://localhost:8080/TeamEnterprise_war/library/readers
      *
      * @return json all readers in the database
@@ -96,10 +96,11 @@ public class LibraryRestful {
 
     /**
      * Get a specific reader by inputting an id
+     * Also shows the books they have checked out.
      * c.READ.u.d
      *
      * http://localhost:8080/TeamEnterprise_war/library/readers/1
-     * @version 1.0 Working
+     * @version 1.5 Working
      *
      * @param readerId
      * @return json specific reader
@@ -121,7 +122,7 @@ public class LibraryRestful {
      * c.READ.u.d
      *
      * http://localhost:8080/TeamEnterprise_war/library/readers/1/books
-     * @version 0.1 Working
+     * @version 1.5 Working
      *
      * @param readerId
      * @return
@@ -129,7 +130,6 @@ public class LibraryRestful {
     @GET
     @Path("readers/{readerId}/books/")
     @Produces("application/json")
-    //TODO This is working but outputs the user for each book.  Needs filtering.
     public Response restfulGetSpecificReadersBooks(@PathParam("readerId") int readerId) {
 
         String readerBookOutput = readerRelatedData.getSpecificReadersBooks(readerId);
@@ -143,7 +143,7 @@ public class LibraryRestful {
      * c.r.UPDATE.d
      *
      * http://localhost:8080/TeamEnterprise_war/library/readers/1/update?firstName="Bob"...
-     * @version 1.0 Working
+     * @version 1.5 Working
      *
      * @param readerId   readerid
      * @param firstName  the first name
@@ -175,14 +175,13 @@ public class LibraryRestful {
      * c.r.u.DELETE
      *
      * http://localhost:8080/TeamEnterprise_war/library/readers/delete/1
-     * @version 0.5 Needs Work
+     * @version 1.5 Working
      *
      * @return the response
      */
     @DELETE
     @Path("readers/delete/{readerid}")
     @Produces("application/json")
-    //TODO This is largely done but can't delete users who are in UsersBooks table. Need fix.
     public Response restfulDeleteReader(@PathParam("readerid") int readerId) {
 
         // Call on delete reader method to delete the reader.
@@ -200,7 +199,7 @@ public class LibraryRestful {
      * CREATE.r.u.d
      *
      * http://localhost:8080/TeamEnterprise_war/library/books/addbyisbn?isbn=9780-061122415
-     * @version 0.8 Very close to complete
+     * @version 1.5 Working Except the ISBN Number
      *
      * @param isbn
      * @return A JSON object with the new books info.
@@ -208,7 +207,7 @@ public class LibraryRestful {
     @POST
     @Path("books/addbyisbn")
     @Produces("application/json")
-    //TODO This method works but doesn't insert ISBN.  Not sure correct code to get isbn.
+    //TODO This method works but doesn't insert ISBN.
     public Response restfulCreateBookFromIsbn(@QueryParam("isbn") String isbn) {
 
         String newBookOutput = bookRelatedData.createBookFromIsbn(isbn);
@@ -222,7 +221,7 @@ public class LibraryRestful {
      * CREATE.r.u.d
      *
      * http://localhost:8080/TeamEnterprise_war/library/books/addManually?isbnten=1234567890.....
-     * @version 1.0 Working
+     * @version 1.5 Working
      *
      * @param isbnTen
      * @param isbnThirteen
@@ -282,7 +281,7 @@ public class LibraryRestful {
      * c.READ.u.d
      *
      * http://localhost:8080/TeamEnterprise_war/library/books/1
-     * @version 1.0 Working
+     * @version 1.5 Working
      *
      * @param bookId
      * @return
@@ -297,28 +296,6 @@ public class LibraryRestful {
 
         // Send the results out to the GET
         return Response.status(200).entity(specificBook).build();
-    }
-
-    /**
-     * By Book, get the reader who currently has the book checked out.
-     * c.READ.u.d
-     *
-     * http://localhost:8080/TeamEnterprise_war/library/books/1/reader
-     * @version 0.8 Almost There
-     *
-     * @param bookId
-     * @return
-     */
-    @GET
-    @Path("books/{bookId}/reader/")
-    @Produces("application/json")
-    //TODO This method works but returns the book not the user.  Small fix.
-    public Response restfulGetSpecificBooksReader(@PathParam("bookId") int bookId) {
-
-        String bookReaderOutput = bookRelatedData.getSpecificBooksReader(bookId);
-
-        // Return the response to the GET.
-        return Response.status(200).entity(bookReaderOutput).build();
     }
 
     /**
@@ -382,16 +359,15 @@ public class LibraryRestful {
 
     /**
      * Check out a book to a reader by cardNumber.
-     * CREATE.r.u.d
+     * c.r.UPDATE.d
      *
      * http://localhost:8080/TeamEnterprise_war/library/books/checkout/1/1
-     * @version 1.0 Working
+     * @version 1.5 Working
      *
      * @param userId
      * @param bookId
      * @return
      */
-    //TODO This method still needs to be done
     @POST
     @Path("books/checkout/{userId}/{bookId}")
     @Produces("application/json")
@@ -405,10 +381,10 @@ public class LibraryRestful {
 
     /**
      * Check in a book from a user
-     * c.r.u.DELETE
+     * c.r.UPDATE.d
      *
      * http://localhost:8080/TeamEnterprise_war/library/books/checkin/123/1
-     * @version 0.1 Needs Much Work
+     * @version 1.5 Working
      *
      * @param bookId
      * @return
@@ -416,7 +392,6 @@ public class LibraryRestful {
     @POST
     @Path("books/checkin/{bookId}")
     @Produces("application/json")
-    //TODO This method still needs to be done
     public Response checkInBook(@PathParam("bookId") int bookId) {
 
         String output = bookRelatedData.checkInBook(bookId);

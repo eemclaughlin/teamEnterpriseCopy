@@ -85,14 +85,14 @@ public class BookApiService {
         bookDao.insert(newBook);
 
         // Return the new user as a string.
-        String bookInfo = newBook.toString();
+        // String bookInfo = newBook.toString();
 
-        logger.debug("Sending back new user info ..." + bookInfo);
+        logger.debug("Sending back new user info ..." + newBook);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
         try {
-            json = mapper.writeValueAsString(bookInfo);
+            json = mapper.writeValueAsString(newBook);
             logger.debug("ResultingJSONstring = " + json);
 
         } catch (JsonProcessingException e) {
@@ -114,14 +114,14 @@ public class BookApiService {
         bookDao.insert(newBook);
 
         // Return the new book as a string.
-        String bookInfo = newBook.toString();
+        // String bookInfo = newBook.toString();
 
-        logger.debug("Sending back new user info ..." + bookInfo);
+        logger.debug("Sending back new user info ..." + newBook);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
         try {
-            json = mapper.writeValueAsString(bookInfo);
+            json = mapper.writeValueAsString(newBook);
             logger.debug("ResultingJSONstring = " + json);
 
         } catch (JsonProcessingException e) {
@@ -182,40 +182,8 @@ public class BookApiService {
     }
 
     /**
-     * Method to get the current reader/user of a given book
-     * c.READ.u.d
-     *
-     * @param bookId the title of the book to get.
-     * @return the book with the given title.
-     */
-    public String getSpecificBooksReader (int bookId) {
-
-        GenericDao bookDao = new GenericDao(Books.class);
-        GenericDao userDao = new GenericDao(User.class);
-        // GenericDao usersBooksDao = new GenericDao(UsersBooks.class);
-
-        Books book = (Books) bookDao.getById(bookId);
-
-        List<User> specificBooksReader = userDao.getByPropertyEqual("book", book);
-
-        logger.debug("Sending specific Books reader: " + specificBooksReader);
-
-        ObjectMapper mapper = new ObjectMapper();
-        String json = null;
-        try {
-            json = mapper.writeValueAsString(specificBooksReader);
-            logger.debug("ResultingJSONstring = " + json);
-
-        } catch (JsonProcessingException e) {
-            logger.error("JSON Processing Exception: " + e);
-        }
-        return json;
-    }
-
-    /**
      * Method to update a book with given info from the REST API.
      * c.r.UPDATE.d
-     *
      *
      * @return the book with the given id.
      */
@@ -263,14 +231,14 @@ public class BookApiService {
         bookDao.saveOrUpdate(book);
 
         // Return the updated book as a string.
-        String bookInfo = bookDao.getById(bookId).toString();
+        //String bookInfo = bookDao.getById(bookId).toString();
 
-        logger.debug("Sending back updated book info ..." + bookInfo);
+        logger.debug("Sending back updated book info ..." + book);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
         try {
-            json = mapper.writeValueAsString(bookInfo);
+            json = mapper.writeValueAsString(book);
             logger.debug("ResultingJSONstring = " + json);
 
         } catch (JsonProcessingException e) {
@@ -345,7 +313,7 @@ public class BookApiService {
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
         try {
-            json = mapper.writeValueAsString("Book checked out successfully.");
+            json = mapper.writeValueAsString(book);
             logger.debug("ResultingJSONstring = " + json);
 
         } catch (JsonProcessingException e) {
