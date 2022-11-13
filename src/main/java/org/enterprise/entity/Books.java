@@ -2,6 +2,8 @@ package org.enterprise.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The type Book.
@@ -49,6 +51,7 @@ public class Books {
 
     @Column(name = "medImageLink")
     private String medImageLink;
+
 
     /**
      * Instantiates a new Book.
