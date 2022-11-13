@@ -5,11 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.enterprise.entity.Books;
+import org.enterprise.entity.User;
+import org.enterprise.entity.UsersBooks;
 import org.enterprise.googlebooksapi.ItemsItem;
 import org.enterprise.persistence.BookApiDao;
 import org.enterprise.persistence.GenericDao;
 import org.enterprise.util.DaoFactory;
 
+import javax.ws.rs.QueryParam;
+import java.awt.print.Book;
 import java.util.List;
 
 /**
@@ -100,15 +104,29 @@ public class BookApiService {
      * Create a new book manually with the given parameters entered at the REST API
      * CREATE.r.u.d
      */
-    public void createBookManually(/* Book object */) {
-        // TODO: Update to return a book object.
-        // TODO integrate with database using GenericDao to create a new book.
-        // Create a new book object.
-        org.enterprise.entity.Books book = new Books();
+    public String createBookManually(String isbnTen, String isbnThirteen, String title, String author, String publisher, String publishedDate, String description, int pageCount, String language) {
 
-        // Create a new bookDao.
+        // Create a new book object and populate it with the given parameters.
+        Books newBook = new Books(isbnTen, isbnThirteen, title, author, description, publisher, publishedDate, pageCount, language, null, null);
 
-        // Return the new book.
+        GenericDao bookDao = new GenericDao(Books.class);
+        bookDao.insert(newBook);
+
+        // Return the new book as a string.
+        String bookInfo = newBook.toString();
+
+        logger.debug("Sending back new user info ..." + bookInfo);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(bookInfo);
+            logger.debug("ResultingJSONstring = " + json);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
     /**
@@ -145,25 +163,21 @@ public class BookApiService {
      */
     public String getSpecificBook(int bookId) {
 
-        // TODO integrate with database using GenericDao and retrieve user by an Id
-        //GenericDao userDao = new GenericDao(User.class);
-        //String specificUser = userDao.getById(Integer.parseInt(userId)).toString();
+        GenericDao<Books> dao = DaoFactory.createDao(Books.class);
+        Books book = (Books) dao.getById(bookId);
 
-        // Create a null test user.
-        String testBook = null;
+        logger.debug("Sending back book with id: " + bookId + "..." + book);
 
-        // Check given bookId for a test return statement.
-        if (bookId == 1) {
-            testBook = "BookOne ";
-        } else if (bookId == 2) {
-            testBook = "BookTwo ";
-        } else if (bookId == 3) {
-            testBook = "BookThree ";
-        } else if (bookId == 4) {
-            testBook = "Book4 ";
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(book);
+            logger.debug("ResultingJSONstring = " + json);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
-
-        return testBook;
+        return json;
     }
 
     /**
@@ -175,35 +189,25 @@ public class BookApiService {
      */
     public String getSpecificBooksReader (int bookId) {
 
-        // Instantiate both the order and user daos.
-        //GenericDao userDao = new GenericDao(User.class);
-        //GenericDao bookDao = new GenericDao(Order.class);
+        GenericDao bookDao = new GenericDao(Books.class);
+        GenericDao usersBooksDao = new GenericDao(UsersBooks.class);
 
-        // Get the user object by the given id.
-        // User user = (User)userDao.getById(Integer.parseInt(userId));
+        Books book = (Books) bookDao.getById(bookId);
 
-        // Use the user object to find order for just that user.
-        // String specificUsersRoles = orderDao.getByPropertyEqual("user", user).toString();
+        List<User> specificBooksReader = usersBooksDao.getByPropertyEqual("book", book);
 
-        // Create a test peer and a test book
-        String testBook = null;
-        String reader = "Johnny";
+        logger.debug("Sending specific Books reader: " + specificBooksReader);
 
-        // Give a book based on id given
-        if (bookId == 1) {
-            testBook = "BookOne ";
-        } else if (bookId == 2) {
-            testBook = "BookTwo ";
-        } else if (bookId == 3) {
-            testBook = "BookThree ";
-        } else if (bookId == 4) {
-            testBook = "Book4 ";
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(book);
+            logger.debug("ResultingJSONstring = " + json);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
-
-        // Combine test peer with test book.
-        String finalString = testBook + " is being read by " + reader;
-
-        return finalString;
+        return json;
     }
 
     /**
@@ -213,14 +217,61 @@ public class BookApiService {
      *
      * @return the book with the given id.
      */
-    public void updateBook(/* Book object */) {
-        // TODO integrate with database using GenericDao to update a book.
-        // Create a new book object.
-        // Book book = new Book();
+    public String updateBook(int bookId, String isbnTen, String isbnThirteen, String title, String author, String publisher, String publishedDate, String description, int pageCount, String language) {
 
-        // Update book in the database.
+        // Creat the new bookDao.
+        GenericDao<Books> bookDao = new GenericDao(Books.class);
 
-        // Return the updated book.
+        // Get the book object by given bookId.
+        Books book = (Books) bookDao.getById(bookId);
+
+        // Set the new values for the book.
+        if (isbnTen != null) {
+            book.setIsbnTen(isbnTen);
+        }
+        if (isbnThirteen != null) {
+            book.setIsbnThirteen(isbnThirteen);
+        }
+        if (title != null) {
+            book.setTitle(title);
+        }
+        if (author != null) {
+            book.setAuthor(author);
+        }
+        if (publisher != null) {
+            book.setPublisher(publisher);
+        }
+        if (publishedDate != null) {
+            book.setPublishedDate(publishedDate);
+        }
+        if (description != null) {
+            book.setDescription(description);
+        }
+        if (pageCount != 0) {
+            book.setPageCount(pageCount);
+        }
+        if (language != null) {
+            book.setLanguage(language);
+        }
+
+        // Update the book.
+        bookDao.saveOrUpdate(book);
+
+        // Return the updated book as a string.
+        String bookInfo = bookDao.getById(bookId).toString();
+
+        logger.debug("Sending back updated book info ..." + bookInfo);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(bookInfo);
+            logger.debug("ResultingJSONstring = " + json);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
     /**
