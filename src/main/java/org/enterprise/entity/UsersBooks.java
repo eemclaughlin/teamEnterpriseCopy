@@ -19,7 +19,6 @@ public class UsersBooks implements Serializable {
     @Id
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "books_id", referencedColumnName = "id")
-
     private Books book;
 
     /**
@@ -37,6 +36,11 @@ public class UsersBooks implements Serializable {
         this.user = user;
         this.book = book;
     }
+
+    //public UsersBooks(int userId, int bookId) {
+    //    this.userId = userId;
+    //    this.bookId = bookId;
+    //}
 
     /**
      * Gets user.

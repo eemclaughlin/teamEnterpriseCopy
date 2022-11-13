@@ -56,7 +56,7 @@ public class ReaderApiService {
             logger.debug("ResultingJSONstring = " + json);
 
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("JSON Processing Exception: " + e);
         }
         return json;
     }
@@ -78,7 +78,7 @@ public class ReaderApiService {
             logger.debug("ResultingJSONstring = " + json);
 
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("JSON Processing Exception: " + e);
         }
         return json;
     }
@@ -105,7 +105,7 @@ public class ReaderApiService {
             logger.debug("ResultingJSONstring = " + json);
 
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("JSON Processing Exception: " + e);
         }
         return json;
     }
@@ -138,7 +138,7 @@ public class ReaderApiService {
             logger.debug("ResultingJSONstring = " + json);
 
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("JSON Processing Exception: " + e);
         }
         return json;
     }
@@ -187,7 +187,7 @@ public class ReaderApiService {
                 logger.debug("ResultingJSONstring = " + json);
 
             } catch (JsonProcessingException e) {
-                e.printStackTrace();
+                logger.error("JSON Processing Exception: " + e);
             }
             return json;
     }
@@ -222,7 +222,7 @@ public class ReaderApiService {
                 logger.debug("ResultingJSONstring = " + json);
 
             } catch (JsonProcessingException e) {
-                e.printStackTrace();
+                logger.error("JSON Processing Exception: " + e);
             }
             return json;
     }
