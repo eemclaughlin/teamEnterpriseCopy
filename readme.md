@@ -25,10 +25,13 @@ populate supplemental book data.
 * Hibernate
 * Log4J2
 * IntelliJ IDEA
+* SwaggerHub
+* Amazon EC2 Elastic Beanstalk
 
 ### Project Operations
 * [Journal](designDocuments/journal.md)
 * [Team Resume](designDocuments/resume.md)
 * [Team Charter](designDocuments/charter.md)
 * [Project Plan](designDocuments/projectPlan.md)
+* [AWS Host - Elastic Beanstalk](http://teamenterprise-env.eba-q5tmzh33.us-east-2.elasticbeanstalk.com/library/)
 * [Full API Documentation](https://app.swaggerhub.com/apis-docs/EBURZLAFF_1/LibraryAPI/1.0.0)
