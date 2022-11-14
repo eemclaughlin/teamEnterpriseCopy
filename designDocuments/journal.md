@@ -64,6 +64,10 @@
 ### Blockers
 >
 ### Weekly Meeting Tasks Assigned/Completed
+[ ] Git API methods up and running
+[ ] Work out final bugs
+[ ] Get documentation working
+[ ] Get war up in AWS.
 [ ] Finish up design
 [ ] Create presentation
 

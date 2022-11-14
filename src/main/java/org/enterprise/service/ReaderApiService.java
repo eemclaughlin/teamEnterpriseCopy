@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.enterprise.entity.Books;
 import org.enterprise.entity.User;
-import org.enterprise.entity.UsersBooks;
 import org.enterprise.persistence.GenericDao;
 import org.enterprise.util.DaoFactory;
 
@@ -45,14 +44,14 @@ public class ReaderApiService {
         userDao.insert(newUser);
 
         // Return the new user as a string.
-        String userInfo = newUser.toString();
+        //String userInfo = newUser.toString();
 
-        logger.debug("Sending back new user info ..." + userInfo);
+        logger.debug("Sending back new user info ..." + newUser);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
         try {
-            json = mapper.writeValueAsString(userInfo);
+            json = mapper.writeValueAsString(newUser);
             logger.debug("ResultingJSONstring = " + json);
 
         } catch (JsonProcessingException e) {
@@ -121,13 +120,13 @@ public class ReaderApiService {
 
         //Instantiate both the books and readers daos.
         GenericDao userDao = new GenericDao(User.class);
-        GenericDao usersBooksDao = new GenericDao(UsersBooks.class);
+        GenericDao booksDao = new GenericDao(Books.class);
 
         // Get the user object by the given id.
         User user = (User) userDao.getById(readerId);
 
         // Use the user object to find books for just that user.
-        List<Books> specificUsersBooks = usersBooksDao.getByPropertyEqual("user", user);
+        List<Books> specificUsersBooks = booksDao.getByPropertyEqual("user", user);
 
         logger.debug("Sending back ALL books for one user..." + specificUsersBooks);
 
@@ -176,14 +175,14 @@ public class ReaderApiService {
 
             // Return the updated user as a string.
             // User userInfo = (User) userDao.getById(readerId);
-            String userInfo = userDao.getById(readerId).toString();
+            // String userInfo = userDao.getById(readerId).toString();
 
-            logger.debug("Sending back updated user info ..." + userInfo);
+            logger.debug("Sending back updated user info ..." + user);
 
             ObjectMapper mapper = new ObjectMapper();
             String json = null;
             try {
-                json = mapper.writeValueAsString(userInfo);
+                json = mapper.writeValueAsString(user);
                 logger.debug("ResultingJSONstring = " + json);
 
             } catch (JsonProcessingException e) {
@@ -211,14 +210,14 @@ public class ReaderApiService {
             userDao.delete(user);
 
             // Return the deleted user as a string.
-            String userInfo = user.toString();
+            // String userInfo = user.toString();
 
-            logger.debug("Sending back deleted user info ..." + userInfo);
+            logger.debug("Sending back deleted user info ..." + user);
 
             ObjectMapper mapper = new ObjectMapper();
             String json = null;
             try {
-                json = mapper.writeValueAsString(userInfo);
+                json = mapper.writeValueAsString(user);
                 logger.debug("ResultingJSONstring = " + json);
 
             } catch (JsonProcessingException e) {

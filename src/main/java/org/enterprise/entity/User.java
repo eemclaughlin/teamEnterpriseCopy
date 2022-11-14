@@ -11,6 +11,7 @@ import java.util.Set;
 @Entity(name = "User")
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -31,8 +32,8 @@ public class User {
     @Column(name = "phone")
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<UsersBooks> usersBooks = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Books> books = new HashSet<>();
 
     /**
      * No Argument Constructor for User
@@ -163,6 +164,24 @@ public class User {
      */
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    /**
+     * Gets books.
+     *
+     * @return the books
+     */
+    public Set<Books> getBooks() {
+        return books;
+    }
+
+    /**
+     * Sets books.
+     *
+     * @param books the books
+     */
+    public void setBooks(Set<Books> books) {
+        this.books = books;
     }
 
     @Override

@@ -8,5 +8,13 @@
       <jdbc-url>jdbc:mysql://localhost:3306/team_enterprise</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="team_enterprise_new@localhost" uuid="9ada8419-efde-4159-bed0-22c47145fc15">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <remarks>Without the Join</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/team_enterprise_new</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
