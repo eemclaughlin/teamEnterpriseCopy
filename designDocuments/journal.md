@@ -50,9 +50,12 @@
 ### Weekly Meeting Tasks Assigned/Completed
 - [x] Read up on Restful API Implementations
 - [x] Get project and database working together in your environments
-- [ ] Get entities up and running.
-- [ ] Get API methods up and running.
-
+- [x] Get entities up and running.
+- [x] Get API methods up and running.
+### Meeting Notes (11/10/22)
+> Eric and John discussed the status of the project and what needs to be done. We agreed that we should meet on Saturday and discuss remaining issues and meeting times via Slack.
+### Meeting Notes (11/12/22)
+> We worked as a team on several unfinished methods and fixing one method. We were not able to get one method to work correctly due to a possible issue with Hibernate and a join table.   
 ## Week 3
 ### Meeting Notes (11/10/22)
 > 
