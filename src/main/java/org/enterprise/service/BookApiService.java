@@ -8,6 +8,7 @@ import org.enterprise.entity.Books;
 import org.enterprise.entity.User;
 
 import org.enterprise.googlebooksapi.ItemsItem;
+import org.enterprise.googlebooksapi.VolumeInfo;
 import org.enterprise.persistence.BookApiDao;
 import org.enterprise.persistence.GenericDao;
 import org.enterprise.util.DaoFactory;
@@ -61,8 +62,6 @@ public class BookApiService {
         // Get book data from Google Books API using the ISBN and populate into the variables.
         for (ItemsItem item : dao.getResponseInfo(isbn).getItems()) {
 
-            isbnTen = null;
-            isbnThirteen = null;
             title = item.getVolumeInfo().getTitle();
             description = item.getVolumeInfo().getDescription();
             publisher = item.getVolumeInfo().getPublisher();
@@ -76,6 +75,15 @@ public class BookApiService {
             for(String arrayAuthor : item.getVolumeInfo().getAuthors()) {
                 //author = item.getVolumeInfo().getAuthors().toString();
                 author = arrayAuthor;
+            }
+
+            // Get ISBN 10 and 13.
+            for (int i = 0; i < item.getVolumeInfo().getIndustryIdentifiers().size(); i++) {
+                if (item.getVolumeInfo().getIndustryIdentifiers().get(i).getType().equals("ISBN_10")) {
+                    isbnTen = item.getVolumeInfo().getIndustryIdentifiers().get(i).getIdentifier();
+                } else if (item.getVolumeInfo().getIndustryIdentifiers().get(i).getType().equals("ISBN_13")) {
+                    isbnThirteen = item.getVolumeInfo().getIndustryIdentifiers().get(i).getIdentifier();
+                }
             }
         }
 
@@ -255,7 +263,6 @@ public class BookApiService {
      * @return the book with the given id.
      */
     public String deleteBook(Integer bookId) {
-        // TODO integrate with database using GenericDao to delete a book.
 
         boolean success = false;
 

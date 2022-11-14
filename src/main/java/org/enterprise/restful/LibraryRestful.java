@@ -207,7 +207,6 @@ public class LibraryRestful {
     @POST
     @Path("books/addbyisbn")
     @Produces("application/json")
-    //TODO This method works but doesn't insert ISBN.
     public Response restfulCreateBookFromIsbn(@QueryParam("isbn") String isbn) {
 
         String newBookOutput = bookRelatedData.createBookFromIsbn(isbn);
@@ -341,7 +340,6 @@ public class LibraryRestful {
      * @param bookId
      * @return
      */
-    //TODO This method works unless there is something in user_books table. Need to fix.
     @DELETE
     @Path("books/delete/{bookid}")
     @Produces("application/json")

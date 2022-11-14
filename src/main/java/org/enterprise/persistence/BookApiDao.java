@@ -36,7 +36,6 @@ public class BookApiDao {
         // Generic client builder being build.
         Client client = ClientBuilder.newClient();
 
-        // TODO Read in the URI from a properties file.
         String urlSearchInfo = "https://www.googleapis.com/books/v1/volumes?fields=items/volumeInfo%28title%2Cauthors%2Cpublisher%2CpublishedDate%2Cdescription%2CindustryIdentifiers%2CpageCount%2Ccategories%2CmaturityRating%2CimageLinks%2Clanguage%29&q=isbn:";
 
         // Put together the url string and the isbn for the final search.
@@ -57,7 +56,6 @@ public class BookApiDao {
             // Do the mapper work.  Read in the response and map to class.
             responseInfo = mapper.readValue(response, ApiIsdnBook.class);
         } catch (JsonProcessingException e) {
-            // TODO Set up Logging and Write This into said log.
             logger.error("JSON Processing error: " + e);
         }
         // Return the response.
