@@ -24,11 +24,11 @@
 - [x] Create all of the REST API methods. (Eric)
   - [x] Work out any final minor issues. (Everyone)
 - [x] Integrate GoogleBooks API Entities and API Dao. (Eric)
-  - [ ] Write unit testing with for the Google Books API (Eric)
-- [ ] Add database to Amazon. (John)
-- [ ] Add war to AWS (Elastic Beanstalk) (John)
-- [ ] Create a presentation for the project. (TBD)
-- [ ] Create API documentation using Swagger. (Eduardo)
+  - [x] Write unit testing with for the Google Books API (Eric)
+- [x] Add database to Amazon. (John)
+- [x] Add war to AWS (Elastic Beanstalk) (John)
+- [x] Create a presentation for the project. (Everyone)
+- [x] Create API documentation using Swagger. (Eduardo)
 
 ### Stretch Goals
 - [ ] Create an administrate user login (Cognito)

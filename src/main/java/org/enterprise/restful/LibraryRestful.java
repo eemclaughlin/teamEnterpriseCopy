@@ -30,13 +30,13 @@ public class LibraryRestful {
      * @return introOutput Introductory message for the user.
      */
     @GET
-    @Produces("application/json")
+    @Produces("text/plain")
     public Response getIntroduction() {
         String introOutput = ("Welcome to the Library App! " +
                 "\n\nUse '/readers' to work with readers. " +
-                "\nEx. http://localhost:8080/TeamEnterprise_war/library/readers/1/books" +
+                "\nEx. http://teamenterprise-env.eba-q5tmzh33.us-east-2.elasticbeanstalk.com/library/readers/1/books" +
                 "\n\nUse '/books' to work with books." +
-                "\nEx. http://localhost:8080/TeamEnterprise_war/library/books/1/readers");
+                "\nEx. http://teamenterprise-env.eba-q5tmzh33.us-east-2.elasticbeanstalk.com/library/books/1/readers");
 
         // Send the results out to the GET
         return Response.status(200).entity(introOutput).build();
