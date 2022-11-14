@@ -43,9 +43,6 @@ public class ReaderApiService {
         // Insert the new user into the database.
         userDao.insert(newUser);
 
-        // Return the new user as a string.
-        //String userInfo = newUser.toString();
-
         logger.debug("Sending back new user info ..." + newUser);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -67,9 +64,13 @@ public class ReaderApiService {
      * @return the list of all readers/users
      */
     public String getAllReaders() {
+
         GenericDao<User> dao = DaoFactory.createDao(User.class);
+
         List<User> users = dao.getAll();
+
         logger.debug("Sending back ALL users..." + users);
+
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
         try {
@@ -93,6 +94,7 @@ public class ReaderApiService {
 
         GenericDao<User> dao = DaoFactory.createDao(User.class);
 
+        // Populate a user with user info from the database by a given id.
         User user = (User) dao.getById(readerId);
 
         logger.debug("Sending back user with id " + readerId + "..." + user);
@@ -157,6 +159,7 @@ public class ReaderApiService {
             User user = (User) userDao.getById(readerId);
 
             // Update the user object with the new information.
+            // If an entry is null, then don't update it.
             if (firstName != null) {
                 user.setFirstName(firstName);
             }
@@ -172,10 +175,6 @@ public class ReaderApiService {
 
             // Update the user in the database.
             userDao.saveOrUpdate(user);
-
-            // Return the updated user as a string.
-            // User userInfo = (User) userDao.getById(readerId);
-            // String userInfo = userDao.getById(readerId).toString();
 
             logger.debug("Sending back updated user info ..." + user);
 
@@ -209,9 +208,6 @@ public class ReaderApiService {
             // Delete the user from the database.
             userDao.delete(user);
 
-            // Return the deleted user as a string.
-            // String userInfo = user.toString();
-
             logger.debug("Sending back deleted user info ..." + user);
 
             ObjectMapper mapper = new ObjectMapper();
@@ -226,6 +222,10 @@ public class ReaderApiService {
             return json;
     }
 
+    /**
+     * Method to generate a random card number for a new user.
+     * @return cardNumber the randomly generated card number.
+     */
     private int generateCardNumber() {
 
         int min = 100;

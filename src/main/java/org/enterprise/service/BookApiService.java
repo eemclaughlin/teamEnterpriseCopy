@@ -92,9 +92,6 @@ public class BookApiService {
         GenericDao bookDao = new GenericDao(Books.class);
         bookDao.insert(newBook);
 
-        // Return the new user as a string.
-        // String bookInfo = newBook.toString();
-
         logger.debug("Sending back new user info ..." + newBook);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -121,9 +118,6 @@ public class BookApiService {
         GenericDao bookDao = new GenericDao(Books.class);
         bookDao.insert(newBook);
 
-        // Return the new book as a string.
-        // String bookInfo = newBook.toString();
-
         logger.debug("Sending back new user info ..." + newBook);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -146,7 +140,10 @@ public class BookApiService {
      */
     public String getAllBooks() {
 
+        // Create a new dao to get a book data response.
         GenericDao<Books> dao = DaoFactory.createDao(Books.class);
+
+        // Get all books from the database.
         List<Books> books = dao.getAll();
 
         logger.debug("Sending back ALL books..." + books);
@@ -172,7 +169,10 @@ public class BookApiService {
      */
     public String getSpecificBook(int bookId) {
 
+        // Create a new dao to get a book data response.
         GenericDao<Books> dao = DaoFactory.createDao(Books.class);
+
+        // Get the book with the given id.
         Books book = (Books) dao.getById(bookId);
 
         logger.debug("Sending back book with id: " + bookId + "..." + book);
@@ -207,6 +207,7 @@ public class BookApiService {
         Books book = (Books) bookDao.getById(bookId);
 
         // Set the new values for the book.
+        // If the value is null, then don't change it.
         if (isbnTen != null) {
             book.setIsbnTen(isbnTen);
         }
@@ -238,9 +239,6 @@ public class BookApiService {
         // Update the book.
         bookDao.saveOrUpdate(book);
 
-        // Return the updated book as a string.
-        //String bookInfo = bookDao.getById(bookId).toString();
-
         logger.debug("Sending back updated book info ..." + book);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -266,9 +264,13 @@ public class BookApiService {
 
         boolean success = false;
 
+        // Create a new dao to get a book data response.
         GenericDao<Books> bookDao = new GenericDao(Books.class);
+
+        // Get the book with the given id.
         Books bookToDelete = bookDao.getById(bookId);
 
+        // Delete the book.
         if (bookToDelete != null) {
             bookDao.delete(bookToDelete);
             success = true;
@@ -276,6 +278,7 @@ public class BookApiService {
 
         logger.debug("Was book deleted: " + success);
 
+        // If the book was deleted, return the book data back to user.
         if (success) {
             ObjectMapper mapper = new ObjectMapper();
             String json = null;
@@ -303,15 +306,18 @@ public class BookApiService {
         logger.debug("User id: " + userId);
         logger.debug("Book id: " + bookId);
 
+        // Create a new dao.
         GenericDao<Books> bookDao = new GenericDao(Books.class);
         GenericDao<User> userDao = new GenericDao(User.class);
 
+        // Get the book and user.
         User user = userDao.getById(userId);
         Books book = bookDao.getById(bookId);
 
         logger.debug("User: " + user);
         logger.debug("Book: " + book);
 
+        // Check out the book to the user by adding the user to the book.
         book.setUser(user);
 
         // Set the book to checked out.
@@ -336,11 +342,16 @@ public class BookApiService {
      */
     public String checkInBook(int bookId) {
 
+        // Create a new dao.
         GenericDao<Books> bookDao = new GenericDao(Books.class);
+
+        // Get the book.
         Books book = bookDao.getById(bookId);
 
+        // Check in the book by removing the user from the book.
         book.setUser(null);
 
+        // Set the book to checked in.
         bookDao.saveOrUpdate(book);
 
         ObjectMapper mapper = new ObjectMapper();
