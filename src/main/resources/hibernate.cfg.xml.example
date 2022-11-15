@@ -18,6 +18,5 @@
 
         <mapping class="org.enterprise.entity.Books" />
         <mapping class="org.enterprise.entity.User" />
-        <mapping class="org.enterprise.entity.UsersBooks" />
     </session-factory>
 </hibernate-configuration>

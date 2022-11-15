@@ -1,28 +1,21 @@
 package org.enterprise.service;
 
+import org.enterprise.entity.Books;
+import org.enterprise.entity.User;
+import org.enterprise.googlebooksapi.ItemsItem;
+import org.enterprise.persistence.BookApiDao;
+import org.enterprise.persistence.GenericDao;
+import org.enterprise.util.DaoFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.enterprise.entity.Books;
-import org.enterprise.entity.User;
-
-import org.enterprise.googlebooksapi.ItemsItem;
-import org.enterprise.googlebooksapi.VolumeInfo;
-import org.enterprise.persistence.BookApiDao;
-import org.enterprise.persistence.GenericDao;
-import org.enterprise.util.DaoFactory;
-
-import javax.ws.rs.QueryParam;
-import java.awt.print.Book;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Class to take requests from the REST API and perform actions based on the request.
  */
 public class BookApiService {
-
     // Create a logger for this class.
     private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -35,7 +28,6 @@ public class BookApiService {
      * @return the book with the given title.
      */
     public String createBookFromIsbn(String isbn) {
-
         logger.debug("ISBN with dashes: " + isbn);
 
         // Remove the dashes from the ISBN.
@@ -59,9 +51,9 @@ public class BookApiService {
         String smallImageLink = null;
         String mediumImageLink = null;
 
-        // Get book data from Google Books API using the ISBN and populate into the variables.
+        // Get book data from Google Books API using the ISBN and populate into
+        // the variables.
         for (ItemsItem item : dao.getResponseInfo(isbn).getItems()) {
-
             title = item.getVolumeInfo().getTitle();
             description = item.getVolumeInfo().getDescription();
             publisher = item.getVolumeInfo().getPublisher();
@@ -87,22 +79,25 @@ public class BookApiService {
             }
         }
 
-        Books newBook = new Books(isbnTen, isbnThirteen, title, author, description, publisher, publishedDate, pageCount, language, smallImageLink, mediumImageLink);
-
+        Books newBook = new Books(isbnTen, isbnThirteen, title, author,
+                description, publisher, publishedDate, pageCount, language,
+                smallImageLink, mediumImageLink);
         GenericDao bookDao = new GenericDao(Books.class);
+
         bookDao.insert(newBook);
 
         logger.debug("Sending back new user info ..." + newBook);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
+
         try {
             json = mapper.writeValueAsString(newBook);
             logger.debug("ResultingJSONstring = " + json);
-
         } catch (JsonProcessingException e) {
             logger.error("JSON Processing Exception: " + e);
         }
+
         return json;
     }
 
@@ -110,25 +105,29 @@ public class BookApiService {
      * Create a new book manually with the given parameters entered at the REST API
      * CREATE.r.u.d
      */
-    public String createBookManually(String isbnTen, String isbnThirteen, String title, String author, String publisher, String publishedDate, String description, int pageCount, String language) {
-
+    public String createBookManually(String isbnTen, String isbnThirteen,
+            String title, String author, String publisher, String publishedDate,
+            String description, int pageCount, String language) {
         // Create a new book object and populate it with the given parameters.
-        Books newBook = new Books(isbnTen, isbnThirteen, title, author, description, publisher, publishedDate, pageCount, language, null, null);
-
+        Books newBook = new Books(isbnTen, isbnThirteen, title, author,
+                description, publisher, publishedDate, pageCount, language,
+                null, null);
         GenericDao bookDao = new GenericDao(Books.class);
+
         bookDao.insert(newBook);
 
         logger.debug("Sending back new user info ..." + newBook);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
+
         try {
             json = mapper.writeValueAsString(newBook);
             logger.debug("ResultingJSONstring = " + json);
-
         } catch (JsonProcessingException e) {
             logger.error("JSON Processing Exception: " + e);
         }
+
         return json;
     }
 
@@ -139,7 +138,6 @@ public class BookApiService {
      * @return a list of all books.
      */
     public String getAllBooks() {
-
         // Create a new dao to get a book data response.
         GenericDao<Books> dao = DaoFactory.createDao(Books.class);
 
@@ -150,13 +148,14 @@ public class BookApiService {
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
+
         try {
             json = mapper.writeValueAsString(books);
             logger.debug("ResultingJSONstring = " + json);
-
         } catch (JsonProcessingException e) {
             logger.error("JSON Processing Exception: " + e);
         }
+
         return json;
     }
 
@@ -168,7 +167,6 @@ public class BookApiService {
      * @return the book with the given id.
      */
     public String getSpecificBook(int bookId) {
-
         // Create a new dao to get a book data response.
         GenericDao<Books> dao = DaoFactory.createDao(Books.class);
 
@@ -179,13 +177,14 @@ public class BookApiService {
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
+
         try {
             json = mapper.writeValueAsString(book);
             logger.debug("ResultingJSONstring = " + json);
-
         } catch (JsonProcessingException e) {
             logger.error("JSON Processing Exception: " + e);
         }
+
         return json;
     }
 
@@ -197,9 +196,7 @@ public class BookApiService {
      */
     public String updateBook(int bookId, String isbnTen, String isbnThirteen,
             String title, String author, String publisher, String publishedDate,
-            String description, int pageCount, String language)
-    {
-
+            String description, int pageCount, String language) {
         // Creat the new bookDao.
         GenericDao<Books> bookDao = new GenericDao(Books.class);
 
@@ -243,13 +240,14 @@ public class BookApiService {
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
+
         try {
             json = mapper.writeValueAsString(book);
             logger.debug("ResultingJSONstring = " + json);
-
         } catch (JsonProcessingException e) {
             logger.error("JSON Processing Exception: " + e);
         }
+
         return json;
     }
 
@@ -261,7 +259,6 @@ public class BookApiService {
      * @return the book with the given id.
      */
     public String deleteBook(Integer bookId) {
-
         boolean success = false;
 
         // Create a new dao to get a book data response.
@@ -282,13 +279,14 @@ public class BookApiService {
         if (success) {
             ObjectMapper mapper = new ObjectMapper();
             String json = null;
+
             try {
                 json = mapper.writeValueAsString(bookToDelete);
                 logger.debug("ResultingJSONstring = " + json);
-
             } catch (JsonProcessingException e) {
                 logger.error("JSON Processing Exception: " + e);
             }
+
             return json;
         } else {
             return "There was an error deleting the book.";
@@ -302,7 +300,6 @@ public class BookApiService {
      * @return Success or failure of the checkout.
      */
     public String checkOutBook(int userId, int bookId) {
-
         logger.debug("User id: " + userId);
         logger.debug("Book id: " + bookId);
 
@@ -325,13 +322,14 @@ public class BookApiService {
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
+
         try {
             json = mapper.writeValueAsString(book);
             logger.debug("ResultingJSONstring = " + json);
-
         } catch (JsonProcessingException e) {
             logger.error("JSON Processing Exception: " + e);
         }
+
         return json;
     }
 
@@ -341,7 +339,6 @@ public class BookApiService {
      * @return Success or failure of the check in.
      */
     public String checkInBook(int bookId) {
-
         // Create a new dao.
         GenericDao<Books> bookDao = new GenericDao(Books.class);
 
@@ -356,13 +353,14 @@ public class BookApiService {
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
+
         try {
             json = mapper.writeValueAsString(book);
             logger.debug("ResultingJSONstring = " + json);
-
         } catch (JsonProcessingException e) {
             logger.error("JSON Processing Exception: " + e);
         }
+
         return json;
     }
 

@@ -3,7 +3,6 @@ package org.enterprise.util;
 import java.io.IOException;
 import java.util.Properties;
 
-
 /**
  * This interface contains a default method that can be used anywhere a Properties
  * object is needed to be loaded.
@@ -11,7 +10,6 @@ import java.util.Properties;
  *
  */
 public interface PropertiesLoader {
-
     /**
      * This default method will load a properties file into a Properties instance
      * and return it.
@@ -21,11 +19,10 @@ public interface PropertiesLoader {
      * @throws IOException properties file cannot be read
      * @throws Exception something went wrong accessing the properties file
      */
-    default Properties loadProperties(String propertiesFilePath) throws IOException, Exception{
+    default Properties loadProperties(String propertiesFilePath) throws IOException, Exception {
         Properties properties = new Properties();
 
         properties.load(this.getClass().getResourceAsStream(propertiesFilePath));
-
         return properties;
     }
 }

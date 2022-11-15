@@ -1,11 +1,7 @@
 package org.enterprise.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * The type Book.
@@ -59,7 +55,6 @@ public class Books {
     @JoinColumn(name = "users_id", foreignKey = @ForeignKey(name = "books_users"))
     private User user;
 
-
     /**
      * Instantiates a new Book.
      * No arg constructor.
@@ -81,26 +76,22 @@ public class Books {
      * @param language       the language
      * @param smallImageLink the small image link
      * @param medImageLink   the med image link
-     *
      */
     public Books(String isbnTen, String isbnThirteen, String title,
-                String author, String description,
-                String publisher, String publishedDate, Integer pageCount,
-                String language, String smallImageLink, String medImageLink) {
-        this.id = id;
+            String author, String description, String publisher,
+            String publishedDate, Integer pageCount, String language,
+            String smallImageLink, String medImageLink) {
         this.isbnTen = isbnTen;
         this.isbnThirteen = isbnThirteen;
         this.title = title;
         this.author = author;
         this.description = description;
-        this.location = location;
         this.publisher = publisher;
         this.publishedDate = publishedDate;
         this.pageCount = pageCount;
         this.language = language;
         this.smallImageLink = smallImageLink;
         this.medImageLink = medImageLink;
-        //this.user = user;
     }
 
     /**
@@ -337,12 +328,15 @@ public class Books {
         this.medImageLink = medImageLink;
     }
 
+    /**
+     * Gets user.
+     *
+     * @return the user
+     */
     public String getUser() {
-
         if (user == null) {
             return "No User";
         } else {
-
             String firstName = user.getFirstName();
 
             String lastName = user.getLastName();
@@ -351,11 +345,18 @@ public class Books {
 
             String phoneNumber = user.getPhoneNumber();
 
-            String fullString = firstName + " " + lastName + " " + email + " " + phoneNumber;
+            String fullString = firstName + " " + lastName + " " + email + " "
+                    + phoneNumber;
+
             return fullString;
         }
     }
 
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     */
     public void setUser(User user) {
         this.user = user;
     }

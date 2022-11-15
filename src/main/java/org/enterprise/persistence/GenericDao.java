@@ -1,13 +1,12 @@
 package org.enterprise.persistence;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
@@ -18,6 +17,7 @@ import java.util.List;
 public class GenericDao<T> {
     // Variable for class of whatever type we are working with.
     private Class<T> type;
+
     // Logging
     private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -61,12 +61,11 @@ public class GenericDao<T> {
      */
     public List<T> getAll() {
         Session session = getSession();
-
         CriteriaBuilder builder = session.getCriteriaBuilder();
-
         CriteriaQuery<T> query = builder.createQuery(type);
         Root<T> root = query.from(type);
         List<T> list = session.createQuery(query).getResultList();
+
         session.close();
         return list;
     }
@@ -81,8 +80,10 @@ public class GenericDao<T> {
         // <T>T is the generic all encompassing type.
         // Session object for using the session provider.
         Session session = getSession();
+
         // entity is generic variable for whatever we get and Cast it (T)
         T entity = (T)session.get(type, id);
+
         session.close();
         return entity;
     }
@@ -99,8 +100,8 @@ public class GenericDao<T> {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> query = builder.createQuery(type);
         Root<T> root = query.from(type);
-        query.select(root).where(builder.equal(root.get(propertyName),value));
 
+        query.select(root).where(builder.equal(root.get(propertyName),value));
         return session.createQuery(query).getResultList();
     }
 
@@ -117,8 +118,8 @@ public class GenericDao<T> {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> query = builder.createQuery(type);
         Root<T> root = query.from(type);
-        query.select(root).where(builder.like(root.get(propertyName), value));
 
+        query.select(root).where(builder.like(root.get(propertyName), value));
         return session.createQuery(query).getResultList();
     }
 
@@ -130,6 +131,7 @@ public class GenericDao<T> {
     public void saveOrUpdate(T entity) {
         Session session = getSession();
         Transaction transaction = session.beginTransaction();
+
         session.saveOrUpdate(entity);
         transaction.commit();
         session.close();
@@ -143,6 +145,7 @@ public class GenericDao<T> {
     public void delete(T entity) {
         Session session = getSession();
         Transaction transaction = session.beginTransaction();
+
         session.delete(entity);
         transaction.commit();
         session.close();
