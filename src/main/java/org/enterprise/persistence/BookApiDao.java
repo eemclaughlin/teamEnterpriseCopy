@@ -1,15 +1,14 @@
 package org.enterprise.persistence;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.enterprise.googlebooksapi.ApiIsdnBook;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.enterprise.googlebooksapi.ApiIsdnBook;
 
 /**
  * Dao for processing Google book API responses.
@@ -17,7 +16,6 @@ import javax.ws.rs.core.MediaType;
  * @version 1.0 10-10-22
  */
 public class BookApiDao {
-
     // Logging
     private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -25,8 +23,7 @@ public class BookApiDao {
      * Generic no arg constructor
      * Instantiates a new Book api dao.
      */
-    public BookApiDao() {
-    }
+    public BookApiDao() {}
 
     /**
      * Gets get response info from Google Books API.
@@ -44,7 +41,8 @@ public class BookApiDao {
         // Pass in the established url.
         WebTarget target = client.target(urlComplete);
 
-        // Get the response data.  Make call, grab returned json data and put into string.
+        // Get the response data.  Make call, grab returned json data and put
+        // into string.
         String response = target.request(MediaType.APPLICATION_JSON).get(String.class);
 
         // Create object mapper.
@@ -52,12 +50,14 @@ public class BookApiDao {
 
         // Create a place to hold the response. (Upper level of package.)
         ApiIsdnBook responseInfo = null;
+
         try {
             // Do the mapper work.  Read in the response and map to class.
             responseInfo = mapper.readValue(response, ApiIsdnBook.class);
         } catch (JsonProcessingException e) {
             logger.error("JSON Processing error: " + e);
         }
+
         // Return the response.
         return responseInfo;
     }
