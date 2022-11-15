@@ -31,14 +31,12 @@ public class User {
     @Column(name = "phone")
     private String phoneNumber;
 
-<<<<<<< Updated upstream
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UsersBooks> usersBooks = new HashSet<>();
-=======
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
             orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Books> books = new HashSet<>();
->>>>>>> Stashed changes
 
     /**
      * No Argument Constructor for User
