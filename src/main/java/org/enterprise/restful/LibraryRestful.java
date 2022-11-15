@@ -1,9 +1,7 @@
 package org.enterprise.restful;
 
-
 import org.enterprise.service.BookApiService;
 import org.enterprise.service.ReaderApiService;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
@@ -17,7 +15,6 @@ import javax.ws.rs.core.Response;
  */
 @Path("/library")
 public class LibraryRestful {
-
     // Instantiate the relevant service classes to process the restful api calls.
     ReaderApiService readerRelatedData = new ReaderApiService();
     BookApiService bookRelatedData = new BookApiService();
@@ -42,9 +39,9 @@ public class LibraryRestful {
         return Response.status(200).entity(introOutput).build();
     }
 
-    // ***********************************************************************************
+    // *************************************************************************
     // BELOW IS START OF READERS/USERS BASED RESTFUL CALLS
-    // ***********************************************************************************
+    // *************************************************************************
     /**
      * Create a new reader/user and add to database.
      * CREATE.r.u.d
@@ -65,9 +62,7 @@ public class LibraryRestful {
             @QueryParam("firstname") String firstName,
             @QueryParam("lastname") String lastName,
             @QueryParam("email") String email,
-            @QueryParam("phone") String phone)
-    {
-
+            @QueryParam("phone") String phone) {
         // Call createUser method from ReaderApiService to create a new user.
         String newUserJson = readerRelatedData.createUser(firstName, lastName, email, phone);
 
@@ -90,6 +85,7 @@ public class LibraryRestful {
     public Response restfulGetAllReaders() {
         // Get a string of all readers.
         String json = readerRelatedData.getAllReaders();
+
         // Send the result string out to the GET
         return Response.status(200).entity(json).build();
     }
@@ -108,7 +104,6 @@ public class LibraryRestful {
     @Path("readers/{readerId}")
     @Produces("application/json")
     public Response restfulGetSpecificReader(@PathParam("readerId") int readerId) {
-
         // Get a specific reader based on id provided.
         String specificReader = readerRelatedData.getSpecificReader(readerId);
 
@@ -131,7 +126,6 @@ public class LibraryRestful {
     @Produces("application/json")
     //TODO This is working but outputs the user for each book.  Needs filtering.
     public Response restfulGetSpecificReadersBooks(@PathParam("readerId") int readerId) {
-
         String readerBookOutput = readerRelatedData.getSpecificReadersBooks(readerId);
 
         // Return the response to the GET.
@@ -160,11 +154,10 @@ public class LibraryRestful {
             @QueryParam("firstname") String firstName,
             @QueryParam("lastname") String lastName,
             @QueryParam("email") String email,
-            @QueryParam("phone") String phone)
-    {
-
+            @QueryParam("phone") String phone) {
         // Take readerID and new parameters and send to update user method.  Return new user info.
-        String updatedUser = readerRelatedData.updateReader(readerId, firstName, lastName, email, phone);
+        String updatedUser = readerRelatedData.updateReader(readerId, firstName,
+                lastName, email, phone);
 
         // Return the response to the GET.
         return Response.status(200).entity(updatedUser).build();
@@ -184,7 +177,6 @@ public class LibraryRestful {
     @Produces("application/json")
     //TODO This is largely done but can't delete users who are in UsersBooks table. Need fix.
     public Response restfulDeleteReader(@PathParam("readerid") int readerId) {
-
         // Call on delete reader method to delete the reader.
         String message = readerRelatedData.deleteReader(readerId);
 
@@ -192,11 +184,12 @@ public class LibraryRestful {
         return Response.status(200).entity(message).build();
     }
 
-    // ***********************************************************************************
+    // *************************************************************************
     // BELOW IS START OF BOOKS BASED RESTFUL CALLS
-    // ***********************************************************************************
+    // *************************************************************************
     /**
-     * Create a new book using the ISBN number to get the book information from the Google Books API.
+     * Create a new book using the ISBN number to get the book information from
+     * the Google Books API.
      * CREATE.r.u.d
      *
      * http://localhost:8080/TeamEnterprise_war/library/books/addbyisbn?isbn=9780-061122415
@@ -210,7 +203,6 @@ public class LibraryRestful {
     @Produces("application/json")
     //TODO This method works but doesn't insert ISBN.  Not sure correct code to get isbn.
     public Response restfulCreateBookFromIsbn(@QueryParam("isbn") String isbn) {
-
         String newBookOutput = bookRelatedData.createBookFromIsbn(isbn);
 
         // Return the new user to the requester.
@@ -247,11 +239,12 @@ public class LibraryRestful {
             @QueryParam("publisheddate") String publishedDate,
             @QueryParam("description") String description,
             @QueryParam("pagecount") int pageCount,
-            @QueryParam("language") String language)
-    {
+            @QueryParam("language") String language) {
 
         // Send book info to create book method and return the new book info.
-        String newBookOutput = bookRelatedData.createBookManually(isbnTen, isbnThirteen, title, author, publisher, publishedDate, description, pageCount, language);
+        String newBookOutput = bookRelatedData.createBookManually(isbnTen,
+                isbnThirteen, title, author, publisher, publishedDate,
+                description, pageCount, language);
 
         // Return the new user to the requester.
         return Response.status(200).entity(newBookOutput).build();
@@ -270,7 +263,6 @@ public class LibraryRestful {
     @Path("books")
     @Produces("application/json")
     public Response restfulGetAllBooks() {
-
         String json = bookRelatedData.getAllBooks();
 
         // Send the results out to the GET
@@ -291,7 +283,6 @@ public class LibraryRestful {
     @Path("books/{bookId}")
     @Produces("application/json")
     public Response restfulGetSpecificBook(@PathParam("bookId") int bookId) {
-
         // Get a specific reader based on id provided.
         String specificBook = bookRelatedData.getSpecificBook(bookId);
 
@@ -344,11 +335,11 @@ public class LibraryRestful {
             @QueryParam("publisheddate") String publishedDate,
             @QueryParam("description") String description,
             @QueryParam("pageCount") int pageCount,
-            @QueryParam("language") String language)
-    {
-
+            @QueryParam("language") String language) {
         // Update the book in the database.
-        String updatedBookOutput = bookRelatedData.updateBook(bookId, isbnTen, isbnThirteen, title, author, publisher, publishedDate, description, pageCount, language);
+        String updatedBookOutput = bookRelatedData.updateBook(bookId, isbnTen,
+                isbnThirteen, title, author, publisher, publishedDate,
+                description, pageCount, language);
 
         // Return the new book to the requester.
         return Response.status(200).entity(updatedBookOutput).build();
@@ -369,16 +360,15 @@ public class LibraryRestful {
     @Path("books/delete/{bookid}")
     @Produces("application/json")
     public Response restfulDeleteBook(@PathParam("bookid") Integer bookId) {
-
         String json = bookRelatedData.deleteBook(bookId);
 
         // Send the results out to the GET
         return Response.status(200).entity(json).build();
     }
 
-    // ***********************************************************************************
+    // *************************************************************************
     // BELOW IS START OF USERS_BOOKS BASED RESTFUL CALLS
-    // ***********************************************************************************
+    // *************************************************************************
 
     /**
      * Check out a book to a reader by cardNumber.
@@ -395,10 +385,17 @@ public class LibraryRestful {
     @POST
     @Path("books/checkout/{cardNumber}/{bookId}")
     @Produces("application/json")
+<<<<<<< Updated upstream
     public Response checkOutBook(@PathParam("cardNumber") int cardNumber, @PathParam("bookId") int bookId) {
         String output = "";
 
         // Check out the book.
+=======
+    public Response checkOutBook(
+            @PathParam("userId") int userId,
+            @PathParam("bookId") int bookId) {
+        String output = bookRelatedData.checkOutBook(userId, bookId);
+>>>>>>> Stashed changes
 
         // Return the new book to the requester.
 
@@ -419,6 +416,7 @@ public class LibraryRestful {
     @POST
     @Path("books/checkin/{cardNumber}/{bookId}")
     @Produces("application/json")
+<<<<<<< Updated upstream
     //TODO This method still needs to be done
     public Response checkInBook(@PathParam("cardNumber") int cardNumber, @PathParam("bookId") int bookId) {
         String output = "";
@@ -426,6 +424,10 @@ public class LibraryRestful {
         // Check in the book.
 
         // Return the new book to the requester.
+=======
+    public Response checkInBook(@PathParam("bookId") int bookId) {
+        String output = bookRelatedData.checkInBook(bookId);
+>>>>>>> Stashed changes
 
         return Response.status(200).entity(output).build();
     }

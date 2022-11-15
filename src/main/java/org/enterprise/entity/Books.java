@@ -50,6 +50,14 @@ public class Books {
     @Column(name = "medImageLink")
     private String medImageLink;
 
+<<<<<<< Updated upstream
+=======
+    //JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "users_id", foreignKey = @ForeignKey(name = "books_users"))
+    private User user;
+
+>>>>>>> Stashed changes
     /**
      * Instantiates a new Book.
      * No arg constructor.
@@ -73,16 +81,21 @@ public class Books {
      * @param medImageLink   the med image link
      */
     public Books(String isbnTen, String isbnThirteen, String title,
+<<<<<<< Updated upstream
                 String author, String description,
                 String publisher, String publishedDate, int pageCount,
                 String language, String smallImageLink, String medImageLink) {
         this.id = id;
+=======
+            String author, String description, String publisher,
+            String publishedDate, Integer pageCount, String language,
+            String smallImageLink, String medImageLink) {
+>>>>>>> Stashed changes
         this.isbnTen = isbnTen;
         this.isbnThirteen = isbnThirteen;
         this.title = title;
         this.author = author;
         this.description = description;
-        this.location = location;
         this.publisher = publisher;
         this.publishedDate = publishedDate;
         this.pageCount = pageCount;
@@ -325,6 +338,42 @@ public class Books {
         this.medImageLink = medImageLink;
     }
 
+<<<<<<< Updated upstream
+=======
+    /**
+     * Gets user.
+     *
+     * @return the user
+     */
+    public String getUser() {
+        if (user == null) {
+            return "No User";
+        } else {
+            String firstName = user.getFirstName();
+
+            String lastName = user.getLastName();
+
+            String email = user.getEmail();
+
+            String phoneNumber = user.getPhoneNumber();
+
+            String fullString = firstName + " " + lastName + " " + email + " "
+                    + phoneNumber;
+
+            return fullString;
+        }
+    }
+
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+>>>>>>> Stashed changes
     @Override
     public String toString() {
         return "Book{" +

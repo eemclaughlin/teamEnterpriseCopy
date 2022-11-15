@@ -1,9 +1,16 @@
 package org.enterprise.service;
 
+import org.enterprise.entity.Books;
+import org.enterprise.entity.User;
+import org.enterprise.googlebooksapi.ItemsItem;
+import org.enterprise.persistence.BookApiDao;
+import org.enterprise.persistence.GenericDao;
+import org.enterprise.util.DaoFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+<<<<<<< Updated upstream
 import org.enterprise.entity.Books;
 import org.enterprise.entity.User;
 import org.enterprise.entity.UsersBooks;
@@ -14,13 +21,14 @@ import org.enterprise.util.DaoFactory;
 
 import javax.ws.rs.QueryParam;
 import java.awt.print.Book;
+=======
+>>>>>>> Stashed changes
 import java.util.List;
 
 /**
  * Class to take requests from the REST API and perform actions based on the request.
  */
 public class BookApiService {
-
     // Create a logger for this class.
     private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -33,7 +41,6 @@ public class BookApiService {
      * @return the book with the given title.
      */
     public String createBookFromIsbn(String isbn) {
-
         logger.debug("ISBN with dashes: " + isbn);
 
         // Remove the dashes from the ISBN.
@@ -57,11 +64,15 @@ public class BookApiService {
         String smallImageLink = null;
         String mediumImageLink = null;
 
-        // Get book data from Google Books API using the ISBN and populate into the variables.
+        // Get book data from Google Books API using the ISBN and populate into
+        // the variables.
         for (ItemsItem item : dao.getResponseInfo(isbn).getItems()) {
+<<<<<<< Updated upstream
 
             isbnTen = null;
             isbnThirteen = null;
+=======
+>>>>>>> Stashed changes
             title = item.getVolumeInfo().getTitle();
             description = item.getVolumeInfo().getDescription();
             publisher = item.getVolumeInfo().getPublisher();
@@ -78,9 +89,11 @@ public class BookApiService {
             }
         }
 
-        Books newBook = new Books(isbnTen, isbnThirteen, title, author, description, publisher, publishedDate, pageCount, language, smallImageLink, mediumImageLink);
-
+        Books newBook = new Books(isbnTen, isbnThirteen, title, author,
+                description, publisher, publishedDate, pageCount, language,
+                smallImageLink, mediumImageLink);
         GenericDao bookDao = new GenericDao(Books.class);
+
         bookDao.insert(newBook);
 
         // Return the new user as a string.
@@ -90,13 +103,14 @@ public class BookApiService {
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
+
         try {
             json = mapper.writeValueAsString(bookInfo);
             logger.debug("ResultingJSONstring = " + json);
-
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
         return json;
     }
 
@@ -104,12 +118,15 @@ public class BookApiService {
      * Create a new book manually with the given parameters entered at the REST API
      * CREATE.r.u.d
      */
-    public String createBookManually(String isbnTen, String isbnThirteen, String title, String author, String publisher, String publishedDate, String description, int pageCount, String language) {
-
+    public String createBookManually(String isbnTen, String isbnThirteen,
+            String title, String author, String publisher, String publishedDate,
+            String description, int pageCount, String language) {
         // Create a new book object and populate it with the given parameters.
-        Books newBook = new Books(isbnTen, isbnThirteen, title, author, description, publisher, publishedDate, pageCount, language, null, null);
-
+        Books newBook = new Books(isbnTen, isbnThirteen, title, author,
+                description, publisher, publishedDate, pageCount, language,
+                null, null);
         GenericDao bookDao = new GenericDao(Books.class);
+
         bookDao.insert(newBook);
 
         // Return the new book as a string.
@@ -119,13 +136,14 @@ public class BookApiService {
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
+
         try {
             json = mapper.writeValueAsString(bookInfo);
             logger.debug("ResultingJSONstring = " + json);
-
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
         return json;
     }
 
@@ -136,7 +154,11 @@ public class BookApiService {
      * @return a list of all books.
      */
     public String getAllBooks() {
+<<<<<<< Updated upstream
 
+=======
+        // Create a new dao to get a book data response.
+>>>>>>> Stashed changes
         GenericDao<Books> dao = DaoFactory.createDao(Books.class);
         List<Books> books = dao.getAll();
 
@@ -144,13 +166,14 @@ public class BookApiService {
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
+
         try {
             json = mapper.writeValueAsString(books);
             logger.debug("ResultingJSONstring = " + json);
-
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
         return json;
     }
 
@@ -162,7 +185,11 @@ public class BookApiService {
      * @return the book with the given id.
      */
     public String getSpecificBook(int bookId) {
+<<<<<<< Updated upstream
 
+=======
+        // Create a new dao to get a book data response.
+>>>>>>> Stashed changes
         GenericDao<Books> dao = DaoFactory.createDao(Books.class);
         Books book = (Books) dao.getById(bookId);
 
@@ -170,10 +197,10 @@ public class BookApiService {
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
+
         try {
             json = mapper.writeValueAsString(book);
             logger.debug("ResultingJSONstring = " + json);
-
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -207,6 +234,7 @@ public class BookApiService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
         return json;
     }
 
@@ -217,8 +245,14 @@ public class BookApiService {
      *
      * @return the book with the given id.
      */
+<<<<<<< Updated upstream
     public String updateBook(int bookId, String isbnTen, String isbnThirteen, String title, String author, String publisher, String publishedDate, String description, int pageCount, String language) {
 
+=======
+    public String updateBook(int bookId, String isbnTen, String isbnThirteen,
+            String title, String author, String publisher, String publishedDate,
+            String description, int pageCount, String language) {
+>>>>>>> Stashed changes
         // Creat the new bookDao.
         GenericDao<Books> bookDao = new GenericDao(Books.class);
 
@@ -264,13 +298,14 @@ public class BookApiService {
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
+
         try {
             json = mapper.writeValueAsString(bookInfo);
             logger.debug("ResultingJSONstring = " + json);
-
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
         return json;
     }
 
@@ -282,8 +317,11 @@ public class BookApiService {
      * @return the book with the given id.
      */
     public String deleteBook(Integer bookId) {
+<<<<<<< Updated upstream
         // TODO integrate with database using GenericDao to delete a book.
 
+=======
+>>>>>>> Stashed changes
         boolean success = false;
 
         GenericDao<Books> bookDao = new GenericDao(Books.class);
@@ -299,13 +337,14 @@ public class BookApiService {
         if (success) {
             ObjectMapper mapper = new ObjectMapper();
             String json = null;
+
             try {
                 json = mapper.writeValueAsString(bookToDelete);
                 logger.debug("ResultingJSONstring = " + json);
-
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
+
             return json;
         } else {
             return "There was an error deleting the book.";
@@ -318,16 +357,49 @@ public class BookApiService {
      * @param userId
      * @return Success or failure of the checkout.
      */
+<<<<<<< Updated upstream
     public boolean checkOutBook(int bookId, int userId) {
         // TODO integrate with database using GenericDao to check out a book.
         boolean success = false;
 
         // Should fail if the book is currently checked out.
+=======
+    public String checkOutBook(int userId, int bookId) {
+        logger.debug("User id: " + userId);
+        logger.debug("Book id: " + bookId);
+>>>>>>> Stashed changes
 
         // Check out book from the database.
 
+<<<<<<< Updated upstream
         // Return if the check out was successful.
         return success;
+=======
+        // Get the book and user.
+        User user = userDao.getById(userId);
+        Books book = bookDao.getById(bookId);
+
+        logger.debug("User: " + user);
+        logger.debug("Book: " + book);
+
+        // Check out the book to the user by adding the user to the book.
+        book.setUser(user);
+
+        // Set the book to checked out.
+        bookDao.saveOrUpdate(book);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+
+        try {
+            json = mapper.writeValueAsString(book);
+            logger.debug("ResultingJSONstring = " + json);
+        } catch (JsonProcessingException e) {
+            logger.error("JSON Processing Exception: " + e);
+        }
+
+        return json;
+>>>>>>> Stashed changes
     }
 
     /**
@@ -336,16 +408,42 @@ public class BookApiService {
      * @param userId
      * @return Success or failure of the check in.
      */
+<<<<<<< Updated upstream
     public boolean checkInBook(int bookId, int userId) {
         // TODO integrate with database using GenericDao to check in a book.
         boolean success = false;
 
         // Should fail if the book is not currently checked out.
+=======
+    public String checkInBook(int bookId) {
+        // Create a new dao.
+        GenericDao<Books> bookDao = new GenericDao(Books.class);
+>>>>>>> Stashed changes
 
         // Check in book from the database.
 
+<<<<<<< Updated upstream
         // Return if the check in was successful.
         return success;
+=======
+        // Check in the book by removing the user from the book.
+        book.setUser(null);
+
+        // Set the book to checked in.
+        bookDao.saveOrUpdate(book);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+
+        try {
+            json = mapper.writeValueAsString(book);
+            logger.debug("ResultingJSONstring = " + json);
+        } catch (JsonProcessingException e) {
+            logger.error("JSON Processing Exception: " + e);
+        }
+
+        return json;
+>>>>>>> Stashed changes
     }
 
     /**

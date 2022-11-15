@@ -31,14 +31,19 @@ public class User {
     @Column(name = "phone")
     private String phoneNumber;
 
+<<<<<<< Updated upstream
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UsersBooks> usersBooks = new HashSet<>();
+=======
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Books> books = new HashSet<>();
+>>>>>>> Stashed changes
 
     /**
      * No Argument Constructor for User
      */
-    public User() {
-    }
+    public User() {}
 
     /**
      * Constructor for User.
@@ -49,7 +54,8 @@ public class User {
      * @param email       the email
      * @param phoneNumber the phone number
      */
-    public User(int cardNumber, String firstName, String lastName, String email, String phoneNumber) {
+    public User(int cardNumber, String firstName, String lastName, String email,
+            String phoneNumber) {
         this.cardNumber = cardNumber;
         this.firstName = firstName;
         this.lastName = lastName;

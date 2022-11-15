@@ -14,7 +14,6 @@ import java.sql.Statement;
 import java.util.Properties;
 
 public class Database {
-
     private final Logger logger = LogManager.getLogger(this.getClass());
     private static Database instance = new Database();
     private Properties properties;
