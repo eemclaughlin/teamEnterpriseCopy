@@ -35,3 +35,4 @@ populate supplemental book data.
 * [Project Plan](designDocuments/projectPlan.md)
 * [AWS Host - Elastic Beanstalk](http://teamenterprise-env.eba-q5tmzh33.us-east-2.elasticbeanstalk.com/library/)
 * [Full API Documentation](https://app.swaggerhub.com/apis-docs/EBURZLAFF_1/LibraryAPI/1.0.0)
+* [Example Site On AWS](http://teamenterprise-env.eba-q5tmzh33.us-east-2.elasticbeanstalk.com/library/)
